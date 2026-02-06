@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 富國島家族旅行手冊</title>
+    <title>2026 富國島家族旅行互動手冊</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
@@ -11,7 +11,7 @@
         
         body {
             font-family: 'Noto Sans TC', sans-serif;
-            background-color: #fffbeb; /* 類沙灘背景色 */
+            background-color: #fffbeb; 
         }
 
         .chart-container {
@@ -36,9 +36,10 @@
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
         }
 
-        .checklist-item.checked {
-            text-decoration: line-through;
-            color: #94a3b8;
+        .lang-cat-active {
+            background-color: #f97316;
+            color: white;
+            border-color: #f97316;
         }
 
         .animate-fade-in {
@@ -50,7 +51,6 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 隱藏捲軸 */
         .no-scrollbar::-webkit-scrollbar {
             display: none;
         }
@@ -58,10 +58,9 @@
 </head>
 <body class="text-slate-800 antialiased">
 
-    <!-- 應用程式容器 -->
     <div class="max-w-4xl mx-auto min-h-screen flex flex-col bg-white shadow-2xl relative">
         
-        <!-- 頁首區塊 -->
+        <!-- Header -->
         <header class="bg-gradient-to-br from-teal-600 to-blue-700 text-white p-6 rounded-b-3xl shadow-lg">
             <div class="flex justify-between items-center">
                 <div>
@@ -72,54 +71,48 @@
             </div>
             <div class="mt-4 flex items-center gap-3">
                 <span class="bg-orange-500 text-white text-xs px-2 py-1 rounded-full font-bold shadow-sm">家庭團員</span>
-                <p class="text-sm">👨‍👩‍👦‍👦 2位大人 + 2位活潑男孩 (7歲 & 5歲)</p>
+                <p class="text-sm">👨‍👩‍👦‍👦 2位大人 + 2位男孩 (7歲 & 5歲)</p>
             </div>
         </header>
 
-        <!-- 導覽標籤 -->
-        <nav class="sticky top-0 bg-white/95 backdrop-blur-sm z-30 border-b border-slate-100 flex shadow-sm">
-            <button onclick="showSection('overview')" id="nav-overview" class="flex-1 py-4 text-sm font-bold transition-all tab-active">旅行總覽</button>
-            <button onclick="showSection('itinerary')" id="nav-itinerary" class="flex-1 py-4 text-sm font-bold transition-all text-slate-400">每日行程</button>
-            <button onclick="showSection('budget')" id="nav-budget" class="flex-1 py-4 text-sm font-bold transition-all text-slate-400">門票試算</button>
-            <button onclick="showSection('guide')" id="nav-guide" class="flex-1 py-4 text-sm font-bold transition-all text-slate-400">行前指南</button>
+        <!-- Navigation Tabs -->
+        <nav class="sticky top-0 bg-white/95 backdrop-blur-sm z-30 border-b border-slate-100 flex shadow-sm overflow-x-auto no-scrollbar">
+            <button onclick="showSection('overview')" id="nav-overview" class="flex-none px-6 py-4 text-sm font-bold transition-all tab-active">總覽</button>
+            <button onclick="showSection('itinerary')" id="nav-itinerary" class="flex-none px-6 py-4 text-sm font-bold transition-all text-slate-400">行程</button>
+            <button onclick="showSection('budget')" id="nav-budget" class="flex-none px-6 py-4 text-sm font-bold transition-all text-slate-400">門票</button>
+            <button onclick="showSection('guide')" id="nav-guide" class="flex-none px-6 py-4 text-sm font-bold transition-all text-slate-400">指南</button>
+            <button onclick="showSection('language')" id="nav-language" class="flex-none px-6 py-4 text-sm font-bold transition-all text-slate-400">語言</button>
         </nav>
 
-        <!-- 主要內容區 -->
         <main class="flex-1 p-5 md:p-8 space-y-10 pb-24">
 
-            <!-- 區塊：總覽 -->
+            <!-- SECTION: OVERVIEW -->
             <section id="section-overview" class="animate-fade-in space-y-8">
                 
-                <!-- 富國島介紹卡片 -->
+                <!-- Intro Card -->
                 <div class="bg-gradient-to-r from-orange-50 to-amber-50 rounded-3xl p-6 border border-orange-100 shadow-sm">
                     <div class="flex items-start gap-4">
                         <div class="text-4xl">🐚</div>
                         <div>
-                            <h2 class="text-xl font-bold text-orange-900 mb-2">認識「珍珠島」：富國島 (Phu Quoc)</h2>
+                            <h2 class="text-xl font-bold text-orange-900 mb-2">探索珍珠島：富國島 (Phu Quoc)</h2>
                             <p class="text-sm text-orange-800 leading-relaxed">
-                                富國島位於越南西南部的泰國灣，是越南最大的島嶼。這裡以「三多」聞名：<span class="font-bold">海鮮多、珍珠多、胡椒多</span>。三月底至四月初正值乾季末期，氣候溫暖穩定，是享受陽光沙灘的最佳時機。
+                                富國島位於越南西南部，是全國最大的島嶼。這裡擁有清澈的海水與白細沙灘，更是著名的珍珠、胡椒與魚露產地。
                             </p>
-                            <div class="grid grid-cols-2 gap-3 mt-4">
-                                <div class="bg-white/50 p-2 rounded-xl text-[10px] text-orange-900">
-                                    <span class="font-bold block text-xs">🏖️ 絕美沙灘</span>
-                                    白沙細膩，水質清澈。
-                                </div>
-                                <div class="bg-white/50 p-2 rounded-xl text-[10px] text-orange-900">
-                                    <span class="font-bold block text-xs">🎡 親子天堂</span>
-                                    全越最大的野生動物園與樂園。
-                                </div>
+                            <div class="grid grid-cols-2 gap-3 mt-4 text-[11px] text-orange-900">
+                                <div class="bg-white/50 p-2 rounded-xl"><span class="font-bold">📅 氣候最佳：</span>3-4月正值乾季，風平浪靜。</div>
+                                <div class="bg-white/50 p-2 rounded-xl"><span class="font-bold">👨‍👩‍👦‍👦 親子首選：</span>北島樂園多、南島水上活動強。</div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="prose prose-slate">
-                    <h2 class="text-2xl font-bold text-teal-800">旅行物流概覽</h2>
-                    <p class="text-slate-600">本節彙整了關鍵的交通與住宿資訊。從台中西屯區出發直飛，請特別留意回程的雙倍行李額度。</p>
+                    <h2 class="text-2xl font-bold text-teal-800">航班與住宿資訊</h2>
+                    <p class="text-slate-600">從台中西屯出發直飛，行程銜接流暢。請特別注意飯店預約接駁時間。</p>
                 </div>
 
-                <!-- 航班卡片 -->
                 <div class="grid md:grid-cols-2 gap-4">
+                    <!-- Outbound -->
                     <div class="bg-slate-50 border border-slate-200 p-5 rounded-2xl relative overflow-hidden shadow-sm">
                         <div class="absolute top-0 right-0 bg-teal-500 text-white px-3 py-1 text-xs font-bold rounded-bl-lg">去程</div>
                         <h3 class="font-bold text-lg mb-4">星宇航空 JX333</h3>
@@ -134,11 +127,10 @@
                                 <p class="text-xs text-slate-400">富國 PQC 📍</p>
                             </a>
                         </div>
-                        <div class="mt-4 pt-4 border-t border-slate-200 text-sm text-slate-600">
-                            💼 托運：1件 / 23kg
-                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-200 text-sm text-slate-600">💼 托運：1件 / 23kg</div>
                     </div>
 
+                    <!-- Inbound -->
                     <div class="bg-orange-50 border border-orange-200 p-5 rounded-2xl relative overflow-hidden shadow-sm">
                         <div class="absolute top-0 right-0 bg-orange-500 text-white px-3 py-1 text-xs font-bold rounded-bl-lg">回程</div>
                         <h3 class="font-bold text-lg mb-4 text-orange-800">星宇航空 JX334</h3>
@@ -153,51 +145,72 @@
                                 <p class="text-xs text-orange-400">台中 RMQ 📍</p>
                             </a>
                         </div>
-                        <div class="mt-4 pt-4 border-t border-orange-200 text-sm text-orange-800 font-bold">
-                            🛍️ 托運：2件 / 23kg (共計 8 件箱子!)
-                        </div>
+                        <div class="mt-4 pt-4 border-t border-orange-200 text-sm text-orange-800 font-bold">🛍️ 托運：2件 / 23kg (加倍!)</div>
                     </div>
                 </div>
 
-                <!-- 飯店卡片 -->
+                <!-- Hotel List -->
                 <div class="space-y-4">
-                    <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:border-teal-200 transition-colors">
-                        <div class="flex flex-col md:flex-row justify-between md:items-center mb-3">
-                            <h3 class="font-bold text-lg text-teal-800">1. 星灣皇冠假日酒店 (北島)</h3>
-                            <span class="text-xs bg-teal-100 text-teal-700 px-2 py-1 rounded">3/28 - 4/01 (4晚)</span>
+                    <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-bold text-lg text-teal-800">Crowne Plaza Starbay (北島)</h3>
+                            <span class="text-xs bg-teal-100 text-teal-700 px-2 py-1 rounded">3/28 - 4/01</span>
                         </div>
-                        <div class="flex justify-between items-start mb-3">
-                            <p class="text-sm text-slate-500">📍 靠近：珍珠樂園、動物園、大世界</p>
-                            <a href="https://maps.app.goo.gl/M4R67e4Wv79vY9N79" target="_blank" class="text-xs bg-sky-500 text-white px-3 py-1 rounded-lg font-bold shadow-sm hover:bg-sky-600 transition-colors">導航地圖</a>
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm text-slate-500">📍 鄰近珍珠樂園與大世界</p>
+                            <a href="https://maps.app.goo.gl/M4R67e4Wv79vY9N79" target="_blank" class="text-xs text-sky-600 font-bold">開啟導航地圖</a>
                         </div>
-                        <div class="bg-yellow-50 p-3 rounded-xl border border-yellow-100 flex gap-3 items-center">
-                            <span class="text-xl">⚠️</span>
-                            <p class="text-xs text-yellow-800 font-medium">重要提醒：機場接駁需提前 12 小時預約 (+84-297-3683999)。建議搭乘 10:15 班次。</p>
+                        <div class="mt-3 bg-yellow-50 p-3 rounded-xl border border-yellow-100 text-xs text-yellow-800">
+                            ⚠️ 接駁：需提前 12 小時預約 (+84-297-3683999)。
                         </div>
                     </div>
 
-                    <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:border-blue-200 transition-colors">
-                        <div class="flex flex-col md:flex-row justify-between md:items-center mb-3">
-                            <h3 class="font-bold text-lg text-blue-800">2. 鉑爾曼海灘度假酒店 (中南島)</h3>
-                            <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">4/01 - 4/04 (3晚)</span>
+                    <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm">
+                        <div class="flex justify-between items-center mb-2">
+                            <h3 class="font-bold text-lg text-blue-800">Pullman Phu Quoc (南島)</h3>
+                            <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">4/01 - 4/04</span>
                         </div>
-                        <div class="flex justify-between items-start mb-3">
-                            <p class="text-sm text-slate-500">📍 靠近：機場、金剛超市、陽東夜市</p>
-                            <a href="https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9" target="_blank" class="text-xs bg-sky-500 text-white px-3 py-1 rounded-lg font-bold shadow-sm hover:bg-sky-600 transition-colors">導航地圖</a>
+                        <div class="flex justify-between items-center">
+                            <p class="text-sm text-slate-500">📍 鄰近夜市與金剛超市</p>
+                            <a href="https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9" target="_blank" class="text-xs text-sky-600 font-bold">開啟導航地圖</a>
                         </div>
-                        <p class="text-xs text-slate-600">⭐ 特色：擁有全島最美泳池與兒童俱樂部。</p>
                     </div>
                 </div>
             </section>
 
-            <!-- 區塊：行程 -->
-            <section id="section-itinerary" class="hidden animate-fade-in space-y-6">
+            <!-- SECTION: LANGUAGE -->
+            <section id="section-language" class="hidden animate-fade-in space-y-8">
                 <div class="prose prose-slate">
-                    <h2 class="text-2xl font-bold text-teal-800">每日冒險計畫</h2>
-                    <p class="text-slate-600">點擊日期查看詳情，每個大標題都已加入 Google 地圖導航連結。</p>
+                    <h2 class="text-2xl font-bold text-teal-800">簡易越南語學習 🇻🇳</h2>
+                    <p class="text-slate-600">
+                        雖然富國島觀光發達，但說上一兩句越語能讓當地人更有親切感。以下為您整理了最實用的情境詞彙。
+                    </p>
                 </div>
 
-                <!-- 天數選擇器 -->
+                <!-- Category Tabs -->
+                <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2">
+                    <button onclick="filterLang('basic')" id="lang-cat-basic" class="lang-cat-active px-4 py-2 rounded-full border border-slate-200 text-xs font-bold transition-all whitespace-nowrap">基本問候</button>
+                    <button onclick="filterLang('food')" id="lang-cat-food" class="px-4 py-2 rounded-full border border-slate-200 text-xs font-bold transition-all whitespace-nowrap text-slate-500">餐廳點餐</button>
+                    <button onclick="filterLang('spa')" id="lang-cat-spa" class="px-4 py-2 rounded-full border border-slate-200 text-xs font-bold transition-all whitespace-nowrap text-slate-500">老婆按摩專區</button>
+                    <button onclick="filterLang('shop')" id="lang-cat-shop" class="px-4 py-2 rounded-full border border-slate-200 text-xs font-bold transition-all whitespace-nowrap text-slate-500">購物/交通</button>
+                </div>
+
+                <!-- Language List -->
+                <div id="language-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 animate-fade-in">
+                    <!-- JS Generated -->
+                </div>
+
+                <div class="bg-indigo-50 p-4 rounded-2xl border border-indigo-100 flex items-start gap-3">
+                    <span class="text-xl">💡</span>
+                    <p class="text-xs text-indigo-800 italic leading-relaxed">
+                        <b>小提醒：</b>越南語有六個聲調，中文諧音僅供參考。如果不通，直接拿出這個介面指給對方看也沒問題！
+                    </p>
+                </div>
+            </section>
+
+            <!-- SECTION: ITINERARY (Previously Built) -->
+            <section id="section-itinerary" class="hidden animate-fade-in space-y-6">
+                <!-- Day Selector -->
                 <div class="flex overflow-x-auto gap-3 pb-4 no-scrollbar">
                     <button onclick="selectDay(1)" id="btn-day-1" class="day-active shrink-0 w-16 h-16 rounded-2xl flex flex-col items-center justify-center transition-all">
                         <span class="text-xs font-bold uppercase opacity-80">Day</span>
@@ -205,429 +218,196 @@
                     </button>
                     <div id="day-selector-container" class="flex gap-3"></div>
                 </div>
-
-                <!-- 每日詳情卡片 -->
+                <!-- Day Detail Card -->
                 <div id="day-detail-card" class="bg-white border border-slate-200 rounded-3xl p-6 shadow-xl relative min-h-[400px]">
-                    <div id="day-content">
-                        <!-- JS 動態內容 -->
-                    </div>
+                    <div id="day-content"></div>
                 </div>
             </section>
 
-            <!-- 區塊：預算 -->
+            <!-- SECTION: BUDGET (Previously Built) -->
             <section id="section-budget" class="hidden animate-fade-in space-y-8">
-                <div class="prose prose-slate">
-                    <h2 class="text-2xl font-bold text-teal-800">門票規則與預算規劃</h2>
-                    <p class="text-slate-600">富國島的景點門票多依「身高」計算。我們的小男孩（7歲、5歲）正處於票種變化的邊緣。</p>
-                </div>
-
-                <!-- 身高判斷工具 -->
                 <div class="bg-teal-900 text-white p-6 rounded-3xl shadow-lg">
-                    <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
-                        <span>📏</span> 快速身高購票判定
-                    </h3>
+                    <h3 class="font-bold text-lg mb-4">📏 身高判定工具 (7歲 & 5歲適用)</h3>
                     <div class="flex gap-4 items-end mb-6">
-                        <div class="flex-1">
-                            <label class="block text-xs font-bold opacity-70 mb-1">輸入小朋友身高 (cm)</label>
-                            <input type="number" id="height-input" placeholder="例如: 110" class="w-full bg-white/10 border border-white/20 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-teal-400 text-white text-lg font-bold">
-                        </div>
-                        <button onclick="checkHeight()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-lg">判定</button>
+                        <input type="number" id="height-input" placeholder="身高 (cm)" class="flex-1 bg-white/10 border border-white/20 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-teal-400 text-white font-bold">
+                        <button onclick="checkHeight()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg">判定</button>
                     </div>
-                    <div id="height-result" class="hidden bg-white/10 p-4 rounded-2xl border border-white/10 text-center animate-fade-in">
-                        <div id="result-badge" class="inline-block px-3 py-1 rounded-full text-xs font-black uppercase mb-2"></div>
-                        <div id="result-text" class="text-xl font-bold"></div>
-                    </div>
+                    <div id="height-result" class="hidden bg-white/10 p-4 rounded-2xl border border-white/10 text-center animate-fade-in text-lg font-bold"></div>
                 </div>
-
-                <!-- 預算圖表 -->
                 <div class="bg-white border border-slate-200 p-6 rounded-3xl shadow-sm">
-                    <h3 class="font-bold text-slate-800 mb-6 text-center">主要景點預估門票支出 (2大2小)</h3>
-                    <div class="chart-container">
-                        <canvas id="budgetChart"></canvas>
-                    </div>
-                    <div class="mt-6 text-center">
-                        <span class="text-xs text-slate-400">總計約需 NT$ 12,000 - 15,000 (視購票當下匯率)</span>
-                    </div>
+                    <div class="chart-container"><canvas id="budgetChart"></canvas></div>
                 </div>
             </section>
 
-            <!-- 區塊：指南 -->
+            <!-- SECTION: GUIDE (Previously Built) -->
             <section id="section-guide" class="hidden animate-fade-in space-y-10">
-                <div class="prose prose-slate">
-                    <h2 class="text-2xl font-bold text-teal-800">行前準備與美食清單</h2>
-                    <p class="text-slate-600">出發前的最後檢查！點擊餐廳名稱可開啟地圖導航。</p>
-                </div>
-
-                <!-- 準備清單 -->
+                <div id="checklist-container" class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm divide-y divide-slate-100"></div>
                 <div>
-                    <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
-                        <span>🎒</span> 必備清單 (點擊勾選)
-                    </h3>
-                    <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm">
-                        <div id="checklist-container" class="divide-y divide-slate-100">
-                            <!-- JS 項目 -->
-                        </div>
-                    </div>
+                    <h3 class="font-bold text-lg mb-4">💆‍♀️ 老婆按摩推薦</h3>
+                    <div id="spa-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                 </div>
-
-                <!-- 餐廳推薦 -->
                 <div>
-                    <h3 class="font-bold text-lg mb-4 flex items-center gap-2">
-                        <span>🍔</span> 親子友善餐廳推薦
-                    </h3>
-                    <div id="food-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- JS 動態內容 -->
-                    </div>
+                    <h3 class="font-bold text-lg mb-4">🍔 親子餐廳推薦</h3>
+                    <div id="food-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
                 </div>
             </section>
 
         </main>
 
-        <!-- 頁尾 -->
         <footer class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md border-t border-slate-100 p-4 text-center z-40 max-w-4xl mx-auto rounded-t-3xl shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
-            <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase">2026 富國島冒險 | 為全家人量身打造</p>
+            <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase">2026 富國島冒險 | 為您的全家量身打造</p>
         </footer>
-
     </div>
 
-    <!-- JavaScript 邏輯 -->
     <script>
-        // 資料結構
-        const itineraryData = [
-            {
-                day: 1,
-                date: "3/28 (六)",
-                title: "抵達與威尼斯之夜",
-                mapUrl: "https://maps.app.goo.gl/M4R67e4Wv79vY9N79",
-                desc: "直飛富國島！第一站前往充滿異國風情的大世界。",
-                items: [
-                    "10:05 抵達富國島，搭乘飯店接駁車至 Crowne Plaza。",
-                    "飯店行李寄放，下午在無邊際泳池放空玩水。",
-                    "18:30 前往【<a href='https://maps.app.goo.gl/vXpS6V9S7q4m9v9v9' target='_blank' class='text-teal-600 underline font-bold'>富國大世界</a>】Grand World。",
-                    "搭乘貢多拉船 (Gondola) 欣賞歐風小鎮。",
-                    "21:30 觀賞【威尼斯的色彩】大型水舞秀 (免費)。"
-                ],
-                food: "晚餐：大世界海鮮餐廳或 Pizza Taxi (西式)。",
-                tip: "下午讓兩個兒子睡個午覺，晚上看秀才有體力！"
-            },
-            {
-                day: 2,
-                date: "3/29 (日)",
-                title: "野生動物嘉年華",
-                mapUrl: "https://maps.app.goo.gl/vMms66QYv7U6x87P6",
-                desc: "與野生動物零距離接觸，是男孩們最期待的一天。",
-                items: [
-                    "09:00 前往【<a href='https://maps.app.goo.gl/vMms66QYv7U6x87P6' target='_blank' class='text-teal-600 underline font-bold'>珍珠野生動物園</a>】Safari。",
-                    "搭乘野生動物遊園巴士，近距離看老虎與獅子。",
-                    "前往【長頸鹿餐廳】親手餵食長頸鹿。",
-                    "觀賞飛禽表演，了解生態保育。"
-                ],
-                food: "午餐：長頸鹿餐廳 (漢堡、雞塊、炒飯)。",
-                tip: "園區很大，建議穿好走的運動鞋，並隨時補充水分。"
-            },
-            {
-                day: 3,
-                date: "3/30 (一)",
-                title: "奇幻樂園大冒險",
-                mapUrl: "https://maps.app.goo.gl/vMms66QYv7U6x87P6",
-                desc: "城堡、水族館與水上樂園，一票玩到底！",
-                items: [
-                    "全天暢玩【<a href='https://maps.app.goo.gl/vMms66QYv7U6x87P6' target='_blank' class='text-teal-600 underline font-bold'>珍珠奇幻樂園</a>】VinWonders。",
-                    "參觀【巨型海龜水族館】，看美人魚表演與海底世界。",
-                    "下午在水上樂園享受各種滑水道。",
-                    "晚上觀賞 Once 表演秀。"
-                ],
-                food: "晚餐：樂園內 Lotteria 炸雞或飯店 Buffet。",
-                tip: "水族館是正午避暑的最佳去處！"
-            },
-            {
-                day: 4,
-                date: "3/31 (二)",
-                title: "尋找紅色海星",
-                mapUrl: "https://maps.app.goo.gl/vMms66QYv7U6x87P6",
-                desc: "前往隱藏版秘境沙灘，感受富國島的純淨。",
-                items: [
-                    "包車前往北島秘境【<a href='https://maps.app.goo.gl/vMms66QYv7U6x87P6' target='_blank' class='text-teal-600 underline font-bold'>海星沙灘</a>】Rach Vem。",
-                    "在清澈海水中找紅色海星 (記得拍照不要拿離水面)。",
-                    "在海邊水上浮動餐廳享用現撈海產。",
-                    "下午回飯店享受私人海灘落日。"
-                ],
-                food: "午餐：海星沙灘水上屋海鮮料理。",
-                tip: "北島路況較顛簸，若容易暈車記得備好藥。"
-            },
-            {
-                day: 5,
-                date: "4/01 (三)",
-                title: "移動與陽東夜市",
-                mapUrl: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9",
-                desc: "移動至南部度假村，晚上感受在地人的熱鬧氣氛。",
-                items: [
-                    "辦理退房，前往中南部飯店 Pullman Phu Quoc。",
-                    "飯店探索，體驗頂級度假村設施。",
-                    "18:30 前往【<a href='https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9' target='_blank' class='text-teal-600 underline font-bold'>陽東夜市</a>】逛逛。",
-                    "購買珍珠、胡椒、腰果等特產。"
-                ],
-                food: "晚餐：陽東夜市炒冰捲、椰子冰、海膽燒烤。",
-                tip: "夜市人多，請牽好小朋友的手，注意安全。"
-            },
-            {
-                day: 6,
-                date: "4/02 (四)",
-                title: "跨海纜車與日落小鎮",
-                mapUrl: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9",
-                desc: "搭乘世界最長跨海纜車，俯瞰無敵海景。",
-                items: [
-                    "搭乘【<a href='https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9' target='_blank' class='text-teal-600 underline font-bold'>香島跨海纜車</a>】前往太陽世界樂園。",
-                    "挑戰木造雲霄飛車 (小孩不宜可玩噴水池)。",
-                    "下午前往【日落小鎮】地中海風建築拍照。",
-                    "漫步【親吻之橋】Kiss Bridge。",
-                    "晚上欣賞【海洋之吻】煙火大秀。"
-                ],
-                food: "晚餐：日落小鎮 Draft Beer 餐廳。",
-                tip: "纜車站周邊風較大，傍晚可備一件薄外套。"
-            },
-            {
-                day: 7,
-                date: "4/03 (五)",
-                title: "慵懶時光與火舞",
-                mapUrl: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9",
-                desc: "最後的瘋狂採買與最美的沙灘火舞表演。",
-                items: [
-                    "前往【<a href='https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9' target='_blank' class='text-teal-600 underline font-bold'>金剛超市</a>】Kingkong Mart 最後採買伴手禮。",
-                    "回飯店享受最後的泳池時光。",
-                    "晚上前往沙灘酒吧欣賞【火舞秀】。",
-                    "整理行李，準備將 8 個箱子裝滿！"
-                ],
-                food: "晚餐：飯店海畔餐廳或 OCSEN 沙灘酒吧。",
-                tip: "腰果建議買帶殼的，富國島的特別香甜。"
-            },
-            {
-                day: 8,
-                date: "4/04 (六)",
-                title: "帶著回憶回台中",
-                mapUrl: "https://maps.app.goo.gl/3X6mJ8y9Vp2v6nLBA",
-                desc: "結束完美的假期，直飛溫暖的家。",
-                items: [
-                    "享用飯店最後一頓豐盛早餐。",
-                    "辦理退房，前往機場。",
-                    "10:40 搭機回台中，預計 15:25 抵達清泉崗機場。"
-                ],
-                food: "午餐：飛機餐。",
-                tip: "檢查護照與隨身物品是否遺漏在飯店。"
-            }
+        // --- Data ---
+        const langData = [
+            { cat: 'basic', cn: '您好', vn: 'Xin chào', sound: '辛超' },
+            { cat: 'basic', cn: '謝謝', vn: 'Cảm ơn', sound: '感恩' },
+            { cat: 'basic', cn: '對不起', vn: 'Xin lỗi', sound: '辛累' },
+            { cat: 'basic', cn: '不客氣', vn: 'Không có gì', sound: '空勾基' },
+            { cat: 'food', cn: '結帳 / 買單', vn: 'Tính tiền', sound: '頂點' },
+            { cat: 'food', cn: '好吃', vn: 'Ngon', sound: '捏安 (鼻音)' },
+            { cat: 'food', cn: '不加辣', vn: 'Không cay', sound: '空蓋' },
+            { cat: 'food', cn: '一、二、三', vn: 'Một, Hai, Ba', sound: '莫、嗨、八' },
+            { cat: 'spa', cn: '加重力道', vn: 'Mạnh lên', sound: '夢連' },
+            { cat: 'spa', cn: '力道輕一點', vn: 'Nhẹ lại', sound: '捏賴' },
+            { cat: 'spa', cn: '這裡很痛', vn: 'Chỗ này đau', sound: '糾耐島' },
+            { cat: 'spa', cn: '很舒服', vn: 'Rất thoải mái', sound: '熱退買' },
+            { cat: 'shop', cn: '廁所在哪裡？', vn: 'Nhà vệ sinh ở đâu?', sound: '家味心鵝島？' },
+            { cat: 'shop', cn: '太貴了', vn: 'Mắc quá', sound: '莫瓜' },
+            { cat: 'shop', cn: '我要去這裡', vn: 'Tôi muốn đi đây', sound: '堆門低低' }
         ];
 
-        const packingList = [
-            { text: "護照與簽證文件", checked: false },
-            { text: "台幣、美金、越盾 (VND)", checked: false },
-            { text: "泳衣、蛙鏡、戲水玩具", checked: false },
-            { text: "兒童防曬乳、遮陽帽", checked: false },
-            { text: "防蚊液、止癢膏 (必備)", checked: false },
-            { text: "常備藥品 (發燒、腸胃、暈車)", checked: false },
-            { text: "Grab App 已安裝並綁定信用卡", checked: false },
-            { text: "多孔充電頭與行動電源", checked: false }
+        const itineraryData = [
+            { day: 1, date: "3/28 (六)", title: "抵達與威尼斯之夜", mapUrl: "https://maps.app.goo.gl/M4R67e4Wv79vY9N79", items: ["10:05 抵達富國島", "飯店接駁至 Crowne Plaza", "18:30 大世界 (Grand World)"], food: "晚餐：大世界海鮮", tip: "下午補眠，晚上才有體力看秀！" },
+            { day: 2, date: "3/29 (日)", title: "野生動物嘉年華", mapUrl: "https://maps.app.goo.gl/vMms66QYv7U6x87P6", items: ["09:00 珍珠野生動物園 (Safari)", "長頸鹿餐廳餵食體驗"], food: "午餐：長頸鹿餐廳漢堡", tip: "長頸鹿餐廳要早點卡位才有第一排。" },
+            { day: 3, date: "3/30 (一)", title: "奇幻樂園冒險", mapUrl: "https://maps.app.goo.gl/vMms66QYv7U6x87P6", items: ["全天：珍珠奇幻樂園 (VinWonders)", "巨型海龜水族館"], food: "晚餐：樂園內炸雞", tip: "水族館是正午避暑最佳去處。" },
+            { day: 4, date: "3/31 (二)", title: "尋找海星", mapUrl: "https://maps.app.goo.gl/vMms66QYv7U6x87P6", items: ["海星沙灘 (Rach Vem)", "回飯店玩水"], food: "午餐：水上浮動餐廳", tip: "路途較顛，小男生容易暈車記得備藥。" },
+            { day: 5, date: "4/01 (三)", title: "移動與夜市", mapUrl: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9", items: ["移動至南島 Pullman", "陽東夜市逛街"], food: "晚餐：夜市海膽燒烤", tip: "移動日可以先去 Kingkong Mart 補貨。" },
+            { day: 6, date: "4/02 (四)", title: "纜車與煙火秀", mapUrl: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9", items: ["跨海纜車 (太陽世界)", "日落小鎮煙火"], food: "晚餐：日落小鎮披薩", tip: "傍晚日落小鎮風大，帶件薄外套。" },
+            { day: 7, date: "4/03 (五)", title: "最後大採買", mapUrl: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9", items: ["金剛超市掃貨", "沙灘火舞表演"], food: "晚餐：沙灘酒吧", tip: "要把 8 件行李箱額度塞滿腰果和胡椒！" },
+            { day: 8, date: "4/04 (六)", title: "回家", mapUrl: "https://maps.app.goo.gl/3X6mJ8y9Vp2v6nLBA", items: ["08:30 退房前往機場", "10:40 起飛回台中"], food: "早餐：Pullman 自助餐", tip: "預留時間退房，免得太趕。" }
+        ];
+
+        const spaData = [
+            { name: "Hoa Sim Spa (飯店內)", url: "https://maps.app.goo.gl/M4R67e4Wv79vY9N79", color: "teal", desc: "北島首選！老婆按摩時，爸爸可以帶小孩去旁邊玩沙。" },
+            { name: "Pullman Spa (飯店內)", url: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9", color: "blue", desc: "設施頂級。適合換飯店後徹底放鬆。" },
+            { name: "Heart & Soul Spa", url: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9", color: "rose", desc: "陽東鎮高評價店。CP 值極高。" }
         ];
 
         const foodData = [
-            { name: "長頸鹿餐廳", url: "https://maps.app.goo.gl/vMms66QYv7U6x87P6", color: "orange", desc: "必去！邊吃漢堡邊餵長頸鹿。建議早點去卡位。" },
-            { name: "Bun Quay Thanh Hung", url: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9", color: "teal", desc: "名產小卷粉。湯頭鮮美，不加辣的話小孩也很愛。" },
-            { name: "Draft Beer (日落小鎮)", url: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9", color: "blue", desc: "有西式拼盤、披薩。大人看夕陽喝啤酒，小孩吃披薩。" },
-            { name: "金剛超市", url: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9", color: "purple", desc: "最後大採購的好地方。腰果、胡椒、珍珠應有盡有。" }
+            { name: "長頸鹿餐廳", url: "https://maps.app.goo.gl/vMms66QYv7U6x87P6", color: "orange", desc: "必去！全家邊吃漢堡邊餵長頸鹿。" },
+            { name: "Bun Quay Thanh Hung", url: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9", color: "teal", desc: "名產小卷粉。湯頭鮮美，小孩也很愛。" },
+            { name: "Draft Beer (日落小鎮)", url: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9", color: "blue", desc: "看日落喝啤酒，有披薩小孩最保險。" }
         ];
 
-        let budgetChart;
+        const packingList = ["護照/美金/越盾", "泳衣/防曬/薄外套", "常備藥品(止瀉/止痛)", "Grab App 安裝註冊"];
 
-        // 初始化
-        window.onload = function() {
-            renderDaySelector();
-            renderDayContent(1);
-            renderChecklist();
-            renderFood();
-            initChart();
-        }
-
-        // 區塊切換
-        function showSection(sectionId) {
-            const sections = ['overview', 'itinerary', 'budget', 'guide'];
-            sections.forEach(s => {
+        // --- Logic ---
+        function showSection(id) {
+            ['overview', 'itinerary', 'budget', 'guide', 'language'].forEach(s => {
                 document.getElementById(`section-${s}`).classList.add('hidden');
                 document.getElementById(`nav-${s}`).classList.remove('tab-active');
                 document.getElementById(`nav-${s}`).classList.add('text-slate-400');
             });
-            document.getElementById(`section-${sectionId}`).classList.remove('hidden');
-            document.getElementById(`nav-${sectionId}`).classList.add('tab-active');
-            document.getElementById(`nav-${sectionId}`).classList.remove('text-slate-400');
+            document.getElementById(`section-${id}`).classList.remove('hidden');
+            document.getElementById(`nav-${id}`).classList.add('tab-active');
+            document.getElementById(`nav-${id}`).classList.remove('text-slate-400');
         }
 
-        // 渲染天數選擇器
-        function renderDaySelector() {
-            const container = document.getElementById('day-selector-container');
-            for (let i = 2; i <= 8; i++) {
-                const btn = document.createElement('button');
-                btn.id = `btn-day-${i}`;
-                btn.onclick = () => selectDay(i);
-                btn.className = "shrink-0 w-16 h-16 rounded-2xl border border-slate-200 bg-white flex flex-col items-center justify-center transition-all hover:border-teal-400";
-                btn.innerHTML = `
-                    <span class="text-xs font-bold uppercase text-slate-400">Day</span>
-                    <span class="text-xl font-black text-slate-700">${i}</span>
-                `;
-                container.appendChild(btn);
-            }
+        function filterLang(cat) {
+            ['basic', 'food', 'spa', 'shop'].forEach(c => {
+                document.getElementById(`lang-cat-${c}`).classList.remove('lang-cat-active');
+                document.getElementById(`lang-cat-${c}`).classList.add('text-slate-500');
+            });
+            document.getElementById(`lang-cat-${cat}`).classList.add('lang-cat-active');
+            document.getElementById(`lang-cat-${cat}`).classList.remove('text-slate-500');
+            renderLang(cat);
         }
 
-        // 天數選擇邏輯
-        function selectDay(dayNum) {
-            for (let i = 1; i <= 8; i++) {
-                const btn = document.getElementById(`btn-day-${i}`);
-                btn.className = "shrink-0 w-16 h-16 rounded-2xl border border-slate-200 bg-white flex flex-col items-center justify-center transition-all hover:border-teal-400";
-                btn.children[0].className = "text-xs font-bold uppercase text-slate-400";
-                btn.children[1].className = "text-xl font-black text-slate-700";
-            }
-            const activeBtn = document.getElementById(`btn-day-${dayNum}`);
-            activeBtn.className = "day-active shrink-0 w-16 h-16 rounded-2xl flex flex-col items-center justify-center transition-all";
-            activeBtn.children[0].className = "text-xs font-bold uppercase opacity-80";
-            activeBtn.children[1].className = "text-xl font-black";
-
-            renderDayContent(dayNum);
-        }
-
-        function renderDayContent(dayNum) {
-            const data = itineraryData[dayNum - 1];
-            const container = document.getElementById('day-content');
-            container.classList.remove('animate-fade-in');
-            void container.offsetWidth; // 觸發重繪
-            container.classList.add('animate-fade-in');
-
-            let itemsHtml = data.items.map(item => `
-                <li class="flex items-start gap-3 text-sm text-slate-600">
-                    <span class="text-teal-500 mt-1">•</span>
-                    <span>${item}</span>
-                </li>
-            `).join('');
-
-            container.innerHTML = `
-                <div class="mb-6">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="text-xs bg-teal-100 text-teal-700 px-2 py-1 rounded font-black">DAY ${data.day}</span>
-                        <span class="text-xs text-slate-400 font-bold">${data.date}</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <h3 class="text-2xl font-black text-slate-800">${data.title}</h3>
-                        <a href="${data.mapUrl}" target="_blank" class="text-xs bg-slate-100 text-slate-600 px-3 py-1 rounded-full font-bold hover:bg-slate-200">查看地圖</a>
-                    </div>
-                    <p class="text-sm text-slate-500 mt-2">${data.desc}</p>
+        function renderLang(cat) {
+            const list = document.getElementById('language-list');
+            list.innerHTML = langData.filter(d => d.cat === cat).map(d => `
+                <div class="bg-white border border-slate-100 p-4 rounded-2xl shadow-sm hover:border-orange-200 transition-all">
+                    <div class="text-[10px] text-slate-400 font-bold mb-1">${d.cn}</div>
+                    <div class="text-xl font-bold text-slate-800 mb-1">${d.vn}</div>
+                    <div class="text-xs text-orange-500 font-bold">諧音：${d.sound}</div>
                 </div>
-                
-                <ul class="space-y-3 mb-8">
-                    ${itemsHtml}
-                </ul>
+            `).join('');
+        }
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-6 border-t border-slate-100">
-                    <div>
-                        <h4 class="text-xs font-black uppercase tracking-widest text-orange-500 mb-2">餐飲建議</h4>
-                        <p class="text-sm text-slate-700 font-medium">${data.food}</p>
-                    </div>
-                    <div>
-                        <h4 class="text-xs font-black uppercase tracking-widest text-blue-500 mb-2">爸媽筆記</h4>
-                        <p class="text-xs text-slate-600 italic">“${data.tip}”</p>
-                    </div>
+        function selectDay(n) {
+            itineraryData.forEach((_, i) => {
+                const btn = document.getElementById(`btn-day-${i+1}`);
+                if(btn) btn.className = "shrink-0 w-16 h-16 rounded-2xl border border-slate-200 bg-white flex flex-col items-center justify-center transition-all hover:border-teal-400";
+            });
+            const active = document.getElementById(`btn-day-${n}`);
+            active.className = "day-active shrink-0 w-16 h-16 rounded-2xl flex flex-col items-center justify-center transition-all";
+            renderDay(n);
+        }
+
+        function renderDay(n) {
+            const d = itineraryData[n-1];
+            document.getElementById('day-content').innerHTML = `
+                <div class="mb-4">
+                    <span class="text-xs bg-teal-100 text-teal-700 px-2 py-1 rounded font-black">DAY ${d.day}</span>
+                    <h3 class="text-2xl font-black mt-2">${d.title}</h3>
+                </div>
+                <ul class="space-y-2 mb-6 text-sm text-slate-600">
+                    ${d.items.map(i => `<li>• ${i}</li>`).join('')}
+                </ul>
+                <div class="grid grid-cols-2 gap-4 border-t pt-4">
+                    <div class="text-xs font-bold text-orange-500">🍕 餐飲：${d.food}</div>
+                    <div class="text-xs italic text-blue-500">“${d.tip}”</div>
                 </div>
             `;
         }
 
-        // 身高判斷邏輯
         function checkHeight() {
-            const input = document.getElementById('height-input');
-            const h = parseInt(input.value);
-            const resDiv = document.getElementById('height-result');
-            const resBadge = document.getElementById('result-badge');
-            const resText = document.getElementById('result-text');
-
-            if (isNaN(h)) return;
-
-            resDiv.classList.remove('hidden');
-
-            if (h < 100) {
-                resBadge.className = "inline-block px-3 py-1 rounded-full text-xs font-black uppercase mb-2 bg-green-500 text-white";
-                resBadge.innerText = "免費";
-                resText.innerText = "耶！完全不需要門票。";
-            } else if (h >= 100 && h <= 140) {
-                resBadge.className = "inline-block px-3 py-1 rounded-full text-xs font-black uppercase mb-2 bg-yellow-500 text-white";
-                resBadge.innerText = "兒童票";
-                resText.innerText = "需購買兒童票 (約成人的 70-80%)。";
-            } else {
-                resBadge.className = "inline-block px-3 py-1 rounded-full text-xs font-black uppercase mb-2 bg-red-500 text-white";
-                resBadge.innerText = "成人票";
-                resText.innerText = "需購買成人票。長高啦！";
-            }
+            const h = parseInt(document.getElementById('height-input').value);
+            const res = document.getElementById('height-result');
+            res.classList.remove('hidden');
+            if (h < 100) res.innerText = "👶 免費入場！";
+            else if (h <= 140) res.innerText = "🧒 兒童票 (約成人的 70%)";
+            else res.innerText = "👨 成人票 (長高啦！)";
         }
 
-        // 預算圖表
         function initChart() {
             const ctx = document.getElementById('budgetChart').getContext('2d');
-            budgetChart = new Chart(ctx, {
+            new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['珍珠雙園', '香島纜車', '海洋之吻', '其他支出'],
-                    datasets: [{
-                        label: '預估預算 (NTD)',
-                        data: [8000, 2800, 1800, 1500],
-                        backgroundColor: [
-                            'rgba(13, 148, 136, 0.8)',
-                            'rgba(249, 115, 22, 0.8)',
-                            'rgba(59, 130, 246, 0.8)',
-                            'rgba(148, 163, 184, 0.5)'
-                        ],
-                        borderRadius: 10,
-                        borderWidth: 0
-                    }]
+                    labels: ['珍珠兩園', '纜車', '其他'],
+                    datasets: [{ label: '預算 (NTD)', data: [8000, 2800, 3000], backgroundColor: ['#0d9488', '#f97316', '#64748b'], borderRadius: 10 }]
                 },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false }
-                    },
-                    scales: {
-                        y: { beginAtZero: true, display: false },
-                        x: { grid: { display: false } }
-                    }
-                }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
             });
         }
 
-        // 渲染準備清單
-        function renderChecklist() {
-            const container = document.getElementById('checklist-container');
-            container.innerHTML = packingList.map((item, idx) => `
-                <div onclick="toggleCheck(${idx})" class="flex items-center gap-4 p-4 cursor-pointer hover:bg-slate-50 transition-colors">
-                    <div class="w-6 h-6 rounded-lg border-2 border-slate-200 flex items-center justify-center transition-all ${item.checked ? 'bg-teal-500 border-teal-500' : ''}">
-                        ${item.checked ? '<span class="text-white text-xs">✓</span>' : ''}
-                    </div>
-                    <span class="text-sm font-medium ${item.checked ? 'checklist-item checked' : 'text-slate-700'}">${item.text}</span>
-                </div>
-            `).join('');
-        }
+        window.onload = () => {
+            // Day selector
+            const container = document.getElementById('day-selector-container');
+            for(let i=2; i<=8; i++) {
+                const b = document.createElement('button');
+                b.id = `btn-day-${i}`;
+                b.onclick = () => selectDay(i);
+                b.className = "shrink-0 w-16 h-16 rounded-2xl border border-slate-200 bg-white flex flex-col items-center justify-center transition-all";
+                b.innerHTML = `<span class="text-xs font-bold uppercase text-slate-400">Day</span><span class="text-xl font-black text-slate-700">${i}</span>`;
+                container.appendChild(b);
+            }
 
-        function toggleCheck(idx) {
-            packingList[idx].checked = !packingList[idx].checked;
-            renderChecklist();
-        }
+            // Checklist
+            document.getElementById('checklist-container').innerHTML = packingList.map(i => `<div class="p-4 flex items-center gap-3 text-sm cursor-pointer hover:bg-slate-50" onclick="this.classList.toggle('opacity-30')"><span>☐</span>${i}</div>`).join('');
+            
+            // Spa & Food
+            document.getElementById('spa-list-container').innerHTML = spaData.map(s => `<a href="${s.url}" target="_blank" class="p-4 bg-${s.color}-50 border border-${s.color}-100 rounded-2xl block text-sm font-bold text-${s.color}-900">${s.name}<p class="text-[10px] font-normal mt-1">${s.desc}</p></a>`).join('');
+            document.getElementById('food-list-container').innerHTML = foodData.map(f => `<a href="${f.url}" target="_blank" class="p-4 bg-${f.color}-50 border border-${f.color}-100 rounded-2xl block text-sm font-bold text-${f.color}-900">${f.name}<p class="text-[10px] font-normal mt-1">${f.desc}</p></a>`).join('');
 
-        // 渲染餐廳推薦
-        function renderFood() {
-            const container = document.getElementById('food-list-container');
-            container.innerHTML = foodData.map(item => `
-                <a href="${item.url}" target="_blank" class="p-4 bg-${item.color}-50 border border-${item.color}-100 rounded-2xl hover:shadow-md transition-shadow block">
-                    <h4 class="font-bold text-${item.color}-900 mb-1 flex justify-between items-center">
-                        ${item.name}
-                        <span class="text-[10px] opacity-60">📍 地圖</span>
-                    </h4>
-                    <p class="text-xs text-${item.color}-800">${item.desc}</p>
-                </a>
-            `).join('');
-        }
-
+            renderDay(1);
+            renderLang('basic');
+            initChart();
+        };
     </script>
 </body>
 </html>
