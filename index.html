@@ -62,29 +62,26 @@
     <div class="max-w-4xl mx-auto min-h-screen flex flex-col bg-white shadow-2xl relative">
         
         <!-- 頁首區塊 -->
-        <header class="bg-gradient-to-br from-teal-600 to-blue-700 text-white p-6 rounded-b-3xl">
-            <div class="flex justify-between items-start">
+        <header class="bg-gradient-to-br from-teal-600 to-blue-700 text-white p-6 rounded-b-3xl shadow-lg">
+            <div class="flex justify-between items-center">
                 <div>
                     <h1 class="text-3xl font-bold tracking-tight mb-2">2026 富國島冒險之旅 🌴</h1>
                     <p class="text-teal-100 font-medium">📅 2026/03/28 - 04/04 (8天7夜)</p>
                 </div>
-                <div class="bg-white/20 backdrop-blur-md rounded-2xl p-3 text-right">
-                    <div class="text-xs uppercase font-bold opacity-80">機票代號</div>
-                    <div class="text-xl font-mono font-bold tracking-wider">E7IJ2G</div>
-                </div>
+                <div class="text-white/20 text-4xl hidden sm:block">🇻🇳</div>
             </div>
-            <div class="mt-6 flex items-center gap-3">
-                <span class="bg-orange-500 text-white text-xs px-2 py-1 rounded-full font-bold">成員</span>
-                <p class="text-sm">👨‍👩‍👦‍👦 2位大人 + 2位活潑小男孩 (7歲、5歲)</p>
+            <div class="mt-4 flex items-center gap-3">
+                <span class="bg-orange-500 text-white text-xs px-2 py-1 rounded-full font-bold shadow-sm">家庭團員</span>
+                <p class="text-sm">👨‍👩‍👦‍👦 2位大人 + 2位活潑男孩 (7歲 & 5歲)</p>
             </div>
         </header>
 
         <!-- 導覽標籤 -->
         <nav class="sticky top-0 bg-white/95 backdrop-blur-sm z-30 border-b border-slate-100 flex shadow-sm">
-            <button onclick="showSection('overview')" id="nav-overview" class="flex-1 py-4 text-sm font-bold transition-all tab-active">總覽</button>
-            <button onclick="showSection('itinerary')" id="nav-itinerary" class="flex-1 py-4 text-sm font-bold transition-all text-slate-400">行程</button>
-            <button onclick="showSection('budget')" id="nav-budget" class="flex-1 py-4 text-sm font-bold transition-all text-slate-400">門票</button>
-            <button onclick="showSection('guide')" id="nav-guide" class="flex-1 py-4 text-sm font-bold transition-all text-slate-400">指南</button>
+            <button onclick="showSection('overview')" id="nav-overview" class="flex-1 py-4 text-sm font-bold transition-all tab-active">旅行總覽</button>
+            <button onclick="showSection('itinerary')" id="nav-itinerary" class="flex-1 py-4 text-sm font-bold transition-all text-slate-400">每日行程</button>
+            <button onclick="showSection('budget')" id="nav-budget" class="flex-1 py-4 text-sm font-bold transition-all text-slate-400">門票試算</button>
+            <button onclick="showSection('guide')" id="nav-guide" class="flex-1 py-4 text-sm font-bold transition-all text-slate-400">行前指南</button>
         </nav>
 
         <!-- 主要內容區 -->
@@ -92,6 +89,30 @@
 
             <!-- 區塊：總覽 -->
             <section id="section-overview" class="animate-fade-in space-y-8">
+                
+                <!-- 富國島介紹卡片 -->
+                <div class="bg-gradient-to-r from-orange-50 to-amber-50 rounded-3xl p-6 border border-orange-100 shadow-sm">
+                    <div class="flex items-start gap-4">
+                        <div class="text-4xl">🐚</div>
+                        <div>
+                            <h2 class="text-xl font-bold text-orange-900 mb-2">認識「珍珠島」：富國島 (Phu Quoc)</h2>
+                            <p class="text-sm text-orange-800 leading-relaxed">
+                                富國島位於越南西南部的泰國灣，是越南最大的島嶼。這裡以「三多」聞名：<span class="font-bold">海鮮多、珍珠多、胡椒多</span>。三月底至四月初正值乾季末期，氣候溫暖穩定，是享受陽光沙灘的最佳時機。
+                            </p>
+                            <div class="grid grid-cols-2 gap-3 mt-4">
+                                <div class="bg-white/50 p-2 rounded-xl text-[10px] text-orange-900">
+                                    <span class="font-bold block text-xs">🏖️ 絕美沙灘</span>
+                                    白沙細膩，水質清澈。
+                                </div>
+                                <div class="bg-white/50 p-2 rounded-xl text-[10px] text-orange-900">
+                                    <span class="font-bold block text-xs">🎡 親子天堂</span>
+                                    全越最大的野生動物園與樂園。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="prose prose-slate">
                     <h2 class="text-2xl font-bold text-teal-800">旅行物流概覽</h2>
                     <p class="text-slate-600">本節彙整了關鍵的交通與住宿資訊。從台中西屯區出發直飛，請特別留意回程的雙倍行李額度。</p>
@@ -99,7 +120,7 @@
 
                 <!-- 航班卡片 -->
                 <div class="grid md:grid-cols-2 gap-4">
-                    <div class="bg-slate-50 border border-slate-200 p-5 rounded-2xl relative overflow-hidden">
+                    <div class="bg-slate-50 border border-slate-200 p-5 rounded-2xl relative overflow-hidden shadow-sm">
                         <div class="absolute top-0 right-0 bg-teal-500 text-white px-3 py-1 text-xs font-bold rounded-bl-lg">去程</div>
                         <h3 class="font-bold text-lg mb-4">星宇航空 JX333</h3>
                         <div class="flex justify-between items-center text-center">
@@ -118,7 +139,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-orange-50 border border-orange-200 p-5 rounded-2xl relative overflow-hidden">
+                    <div class="bg-orange-50 border border-orange-200 p-5 rounded-2xl relative overflow-hidden shadow-sm">
                         <div class="absolute top-0 right-0 bg-orange-500 text-white px-3 py-1 text-xs font-bold rounded-bl-lg">回程</div>
                         <h3 class="font-bold text-lg mb-4 text-orange-800">星宇航空 JX334</h3>
                         <div class="flex justify-between items-center text-center">
@@ -140,7 +161,7 @@
 
                 <!-- 飯店卡片 -->
                 <div class="space-y-4">
-                    <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm">
+                    <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:border-teal-200 transition-colors">
                         <div class="flex flex-col md:flex-row justify-between md:items-center mb-3">
                             <h3 class="font-bold text-lg text-teal-800">1. 星灣皇冠假日酒店 (北島)</h3>
                             <span class="text-xs bg-teal-100 text-teal-700 px-2 py-1 rounded">3/28 - 4/01 (4晚)</span>
@@ -155,7 +176,7 @@
                         </div>
                     </div>
 
-                    <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm">
+                    <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm hover:border-blue-200 transition-colors">
                         <div class="flex flex-col md:flex-row justify-between md:items-center mb-3">
                             <h3 class="font-bold text-lg text-blue-800">2. 鉑爾曼海灘度假酒店 (中南島)</h3>
                             <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">4/01 - 4/04 (3晚)</span>
@@ -264,7 +285,7 @@
 
         <!-- 頁尾 -->
         <footer class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md border-t border-slate-100 p-4 text-center z-40 max-w-4xl mx-auto rounded-t-3xl shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
-            <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase">2026 Phu Quoc Adventure | Designed for Family</p>
+            <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase">2026 富國島冒險 | 為全家人量身打造</p>
         </footer>
 
     </div>
@@ -277,7 +298,7 @@
                 day: 1,
                 date: "3/28 (六)",
                 title: "抵達與威尼斯之夜",
-                mapUrl: "https://maps.app.goo.gl/9vY9N79vY9N79vY9",
+                mapUrl: "https://maps.app.goo.gl/M4R67e4Wv79vY9N79",
                 desc: "直飛富國島！第一站前往充滿異國風情的大世界。",
                 items: [
                     "10:05 抵達富國島，搭乘飯店接駁車至 Crowne Plaza。",
@@ -293,7 +314,7 @@
                 day: 2,
                 date: "3/29 (日)",
                 title: "野生動物嘉年華",
-                mapUrl: "https://maps.app.goo.gl/8vX3y9v9v9v9v9",
+                mapUrl: "https://maps.app.goo.gl/vMms66QYv7U6x87P6",
                 desc: "與野生動物零距離接觸，是男孩們最期待的一天。",
                 items: [
                     "09:00 前往【<a href='https://maps.app.goo.gl/vMms66QYv7U6x87P6' target='_blank' class='text-teal-600 underline font-bold'>珍珠野生動物園</a>】Safari。",
@@ -408,7 +429,7 @@
         ];
 
         const foodData = [
-            { name: "長頸鹿餐廳", url: "https://maps.app.goo.gl/8vX3y9v9v9v9v9", color: "orange", desc: "必去！邊吃漢堡邊餵長頸鹿。建議早點去卡位。" },
+            { name: "長頸鹿餐廳", url: "https://maps.app.goo.gl/vMms66QYv7U6x87P6", color: "orange", desc: "必去！邊吃漢堡邊餵長頸鹿。建議早點去卡位。" },
             { name: "Bun Quay Thanh Hung", url: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9", color: "teal", desc: "名產小卷粉。湯頭鮮美，不加辣的話小孩也很愛。" },
             { name: "Draft Beer (日落小鎮)", url: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9", color: "blue", desc: "有西式拼盤、披薩。大人看夕陽喝啤酒，小孩吃披薩。" },
             { name: "金剛超市", url: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9", color: "purple", desc: "最後大採購的好地方。腰果、胡椒、珍珠應有盡有。" }
