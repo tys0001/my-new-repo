@@ -1,413 +1,729 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
+<!doctype html>
+<html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 富國島家族旅行互動手冊</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap');
-        
-        body {
-            font-family: 'Noto Sans TC', sans-serif;
-            background-color: #fffbeb; 
-        }
-
-        .chart-container {
-            position: relative;
-            width: 100%;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-            max-height: 400px;
-        }
-
-        .tab-active {
-            border-bottom: 4px solid #0d9488;
-            color: #0d9488;
-            font-weight: 700;
-        }
-
-        .day-active {
-            background-color: #0d9488;
-            color: white;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-        }
-
-        .lang-cat-active {
-            background-color: #f97316;
-            color: white;
-            border-color: #f97316;
-        }
-
-        .animate-fade-in {
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>富國島 2026 家庭旅行 V3</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .thin-scroll::-webkit-scrollbar{ width:10px; height:10px; }
+    .thin-scroll::-webkit-scrollbar-thumb{ background:#e2e8f0; border-radius:999px; border:3px solid #fff; }
+    .thin-scroll::-webkit-scrollbar-track{ background:#fff; }
+    .card{ border:1px solid rgb(226 232 240); border-radius: 1rem; background:#fff; box-shadow: 0 1px 2px rgb(15 23 42 / 0.06); }
+    .pill{ border:1px solid rgb(226 232 240); border-radius: 999px; padding:.25rem .6rem; font-size:.75rem; color: rgb(71 85 105); background:#fff; }
+    .btn{ border:1px solid rgb(226 232 240); border-radius:.9rem; padding:.55rem .8rem; font-size:.875rem; background:#fff; }
+    .btn:hover{ background: rgb(248 250 252); }
+    .btnPrimary{ background: rgb(15 23 42); color:#fff; border-color: rgb(15 23 42); }
+    .btnPrimary:hover{ background: rgb(30 41 59); }
+    .linkbtn{ border:1px solid rgb(219 234 254); background: rgb(239 246 255); color: rgb(30 64 175); border-radius:999px; padding:.25rem .6rem; font-size:.75rem; }
+    .linkbtn:hover{ background: rgb(219 234 254); }
+    .kbd{ border:1px solid rgb(226 232 240); border-bottom-width:2px; border-radius:.5rem; padding:.1rem .4rem; font-size:.75rem; color: rgb(71 85 105); background:#fff; }
+  </style>
 </head>
-<body class="text-slate-800 antialiased">
 
-    <div class="max-w-4xl mx-auto min-h-screen flex flex-col bg-white shadow-2xl relative">
-        
-        <!-- Header -->
-        <header class="bg-gradient-to-br from-teal-600 to-blue-700 text-white p-6 rounded-b-3xl shadow-lg">
-            <div class="flex justify-between items-center">
-                <div>
-                    <h1 class="text-3xl font-bold tracking-tight mb-2">2026 富國島冒險之旅 🌴</h1>
-                    <p class="text-teal-100 font-medium">📅 2026/03/28 - 04/04 (8天7夜)</p>
-                </div>
-                <div class="text-white/20 text-4xl hidden sm:block">🇻🇳</div>
+<body class="bg-slate-50 text-slate-900">
+  <div class="min-h-screen">
+    <!-- Top bar -->
+    <header class="sticky top-0 z-30 border-b border-slate-200 bg-white/80 backdrop-blur">
+      <div class="mx-auto max-w-6xl px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <div class="text-lg font-semibold tracking-tight">富國島 8 天 7 夜 家庭旅行</div>
+          <div class="text-xs text-slate-500">2026/03/28 (六) – 04/04 (六) ・2 大 + 2 小（7歲、5歲）</div>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="tabBtn_itinerary" class="tabBtn btn btnPrimary" data-tab="itinerary">行程</button>
+          <button id="tabBtn_map" class="tabBtn btn" data-tab="map">地圖連結</button>
+          <button id="tabBtn_packing" class="tabBtn btn" data-tab="packing">行李清單</button>
+          <button id="tabBtn_grab" class="tabBtn btn" data-tab="grab">Grab 車資</button>
+          <button id="tabBtn_planb" class="tabBtn btn" data-tab="planb">雨天備案</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="mx-auto max-w-6xl px-4 py-5">
+      <!-- Hero / quick facts -->
+      <section class="card p-5">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+          <div>
+            <div class="text-sm font-semibold">快速摘要</div>
+            <div class="mt-2 text-sm text-slate-700 leading-relaxed">
+              北島 4 晚（Crowne Plaza 區）玩 Safari / VinWonders / Grand World；南島 3 晚（Pullman）放鬆與纜車夜間秀；中島穿插夜市與採買。
             </div>
-            <div class="mt-4 flex items-center gap-3">
-                <span class="bg-orange-500 text-white text-xs px-2 py-1 rounded-full font-bold shadow-sm">家庭團員</span>
-                <p class="text-sm">👨‍👩‍👦‍👦 2位大人 + 2位男孩 (7歲 & 5歲)</p>
+            <div class="mt-3 flex flex-wrap gap-2">
+              <span class="pill">去程 JX333 07:25 台中 → 10:05 富國島</span>
+              <span class="pill">回程 JX334 10:40 富國島 → 15:25 台中</span>
+              <span class="pill">回程行李：每人 23kg x 2</span>
             </div>
-        </header>
+          </div>
+          <div class="grid grid-cols-2 gap-2 md:w-[340px]">
+            <div class="rounded-xl border border-slate-200 p-3 bg-slate-50">
+              <div class="text-xs text-slate-500">北島住宿</div>
+              <div class="text-sm font-semibold mt-1">Crowne Plaza Starbay</div>
+              <div class="text-xs text-slate-500 mt-1">03/28 – 04/01</div>
+            </div>
+            <div class="rounded-xl border border-slate-200 p-3 bg-slate-50">
+              <div class="text-xs text-slate-500">南島住宿</div>
+              <div class="text-sm font-semibold mt-1">Pullman Phu Quoc</div>
+              <div class="text-xs text-slate-500 mt-1">04/01 – 04/04</div>
+            </div>
+            <div class="rounded-xl border border-slate-200 p-3 bg-slate-50">
+              <div class="text-xs text-slate-500">家庭節奏</div>
+              <div class="text-sm font-semibold mt-1">每天只抓 1 個主行程</div>
+              <div class="text-xs text-slate-500 mt-1">避免孩子累爆</div>
+            </div>
+            <div class="rounded-xl border border-slate-200 p-3 bg-slate-50">
+              <div class="text-xs text-slate-500">按摩策略</div>
+              <div class="text-sm font-semibold mt-1">晚餐後輪流去</div>
+              <div class="text-xs text-slate-500 mt-1">回復速度最快</div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 text-xs text-slate-500">
+          提示：你可以用 <span class="kbd">Cmd</span> + <span class="kbd">F</span> 搜尋「Day 6」或「按摩」快速定位內容。
+        </div>
+      </section>
 
-        <!-- Navigation Tabs -->
-        <nav class="sticky top-0 bg-white/95 backdrop-blur-sm z-30 border-b border-slate-100 flex shadow-sm overflow-x-auto no-scrollbar">
-            <button onclick="showSection('overview')" id="nav-overview" class="flex-none px-6 py-4 text-sm font-bold transition-all tab-active">總覽</button>
-            <button onclick="showSection('itinerary')" id="nav-itinerary" class="flex-none px-6 py-4 text-sm font-bold transition-all text-slate-400">行程</button>
-            <button onclick="showSection('budget')" id="nav-budget" class="flex-none px-6 py-4 text-sm font-bold transition-all text-slate-400">門票</button>
-            <button onclick="showSection('guide')" id="nav-guide" class="flex-none px-6 py-4 text-sm font-bold transition-all text-slate-400">指南</button>
-            <button onclick="showSection('language')" id="nav-language" class="flex-none px-6 py-4 text-sm font-bold transition-all text-slate-400">語言</button>
-        </nav>
+      <!-- Tabs -->
+      <section class="mt-4">
+        <!-- Itinerary -->
+        <div id="tab_itinerary" class="tabPane">
+          <div class="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-4">
+            <div class="space-y-3" id="dayList"></div>
 
-        <main class="flex-1 p-5 md:p-8 space-y-10 pb-24">
-
-            <!-- SECTION: OVERVIEW -->
-            <section id="section-overview" class="animate-fade-in space-y-8">
-                
-                <!-- Intro Card -->
-                <div class="bg-gradient-to-r from-orange-50 to-amber-50 rounded-3xl p-6 border border-orange-100 shadow-sm">
-                    <div class="flex items-start gap-4">
-                        <div class="text-4xl">🐚</div>
-                        <div>
-                            <h2 class="text-xl font-bold text-orange-900 mb-2">探索珍珠島：富國島 (Phu Quoc)</h2>
-                            <p class="text-sm text-orange-800 leading-relaxed">
-                                富國島位於越南西南部，是全國最大的島嶼。這裡擁有清澈的海水與白細沙灘，更是著名的珍珠、胡椒與魚露產地。
-                            </p>
-                            <div class="grid grid-cols-2 gap-3 mt-4 text-[11px] text-orange-900">
-                                <div class="bg-white/50 p-2 rounded-xl"><span class="font-bold">📅 氣候最佳：</span>3-4月正值乾季，風平浪靜。</div>
-                                <div class="bg-white/50 p-2 rounded-xl"><span class="font-bold">👨‍👩‍👦‍👦 親子首選：</span>北島樂園多、南島水上活動強。</div>
-                            </div>
-                        </div>
-                    </div>
+            <aside class="space-y-3">
+              <div class="card p-4">
+                <div class="text-sm font-semibold">今日按鈕</div>
+                <div class="mt-3 grid grid-cols-2 gap-2">
+                  <button id="btnOpenAll" class="btn">全部展開</button>
+                  <button id="btnCloseAll" class="btn">全部收合</button>
                 </div>
-
-                <div class="prose prose-slate">
-                    <h2 class="text-2xl font-bold text-teal-800">航班與住宿資訊</h2>
-                    <p class="text-slate-600">從台中西屯出發直飛，行程銜接流暢。請特別注意飯店預約接駁時間。</p>
+                <div class="mt-3 text-xs text-slate-500 leading-relaxed">
+                  行程卡片可直接展開時間軸；每張卡片也有「Google 地圖」快速連結。
                 </div>
+              </div>
 
-                <div class="grid md:grid-cols-2 gap-4">
-                    <!-- Outbound -->
-                    <div class="bg-slate-50 border border-slate-200 p-5 rounded-2xl relative overflow-hidden shadow-sm">
-                        <div class="absolute top-0 right-0 bg-teal-500 text-white px-3 py-1 text-xs font-bold rounded-bl-lg">去程</div>
-                        <h3 class="font-bold text-lg mb-4">星宇航空 JX333</h3>
-                        <div class="flex justify-between items-center text-center">
-                            <a href="https://maps.app.goo.gl/3X6mJ8y9Vp2v6nLBA" target="_blank" class="hover:opacity-75 transition-opacity">
-                                <p class="text-2xl font-bold underline decoration-sky-300">07:25</p>
-                                <p class="text-xs text-slate-400">台中 RMQ 📍</p>
-                            </a>
-                            <div class="text-teal-400">➔</div>
-                            <a href="https://maps.app.goo.gl/vMms66QYv7U6x87P6" target="_blank" class="hover:opacity-75 transition-opacity">
-                                <p class="text-2xl font-bold underline decoration-sky-300">10:05</p>
-                                <p class="text-xs text-slate-400">富國 PQC 📍</p>
-                            </a>
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-slate-200 text-sm text-slate-600">💼 托運：1件 / 23kg</div>
-                    </div>
-
-                    <!-- Inbound -->
-                    <div class="bg-orange-50 border border-orange-200 p-5 rounded-2xl relative overflow-hidden shadow-sm">
-                        <div class="absolute top-0 right-0 bg-orange-500 text-white px-3 py-1 text-xs font-bold rounded-bl-lg">回程</div>
-                        <h3 class="font-bold text-lg mb-4 text-orange-800">星宇航空 JX334</h3>
-                        <div class="flex justify-between items-center text-center">
-                            <a href="https://maps.app.goo.gl/vMms66QYv7U6x87P6" target="_blank" class="hover:opacity-75 transition-opacity">
-                                <p class="text-2xl font-bold text-orange-900 underline decoration-orange-300">10:40</p>
-                                <p class="text-xs text-orange-400">富國 PQC 📍</p>
-                            </a>
-                            <div class="text-orange-400">➔</div>
-                            <a href="https://maps.app.goo.gl/3X6mJ8y9Vp2v6nLBA" target="_blank" class="hover:opacity-75 transition-opacity">
-                                <p class="text-2xl font-bold text-orange-900 underline decoration-orange-300">15:25</p>
-                                <p class="text-xs text-orange-400">台中 RMQ 📍</p>
-                            </a>
-                        </div>
-                        <div class="mt-4 pt-4 border-t border-orange-200 text-sm text-orange-800 font-bold">🛍️ 托運：2件 / 23kg (加倍!)</div>
-                    </div>
-                </div>
-
-                <!-- Hotel List -->
-                <div class="space-y-4">
-                    <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm">
-                        <div class="flex justify-between items-center mb-2">
-                            <h3 class="font-bold text-lg text-teal-800">Crowne Plaza Starbay (北島)</h3>
-                            <span class="text-xs bg-teal-100 text-teal-700 px-2 py-1 rounded">3/28 - 4/01</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <p class="text-sm text-slate-500">📍 鄰近珍珠樂園與大世界</p>
-                            <a href="https://maps.app.goo.gl/M4R67e4Wv79vY9N79" target="_blank" class="text-xs text-sky-600 font-bold">開啟導航地圖</a>
-                        </div>
-                        <div class="mt-3 bg-yellow-50 p-3 rounded-xl border border-yellow-100 text-xs text-yellow-800">
-                            ⚠️ 接駁：需提前 12 小時預約 (+84-297-3683999)。
-                        </div>
-                    </div>
-
-                    <div class="bg-white border border-slate-200 p-5 rounded-2xl shadow-sm">
-                        <div class="flex justify-between items-center mb-2">
-                            <h3 class="font-bold text-lg text-blue-800">Pullman Phu Quoc (南島)</h3>
-                            <span class="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">4/01 - 4/04</span>
-                        </div>
-                        <div class="flex justify-between items-center">
-                            <p class="text-sm text-slate-500">📍 鄰近夜市與金剛超市</p>
-                            <a href="https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9" target="_blank" class="text-xs text-sky-600 font-bold">開啟導航地圖</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- SECTION: LANGUAGE -->
-            <section id="section-language" class="hidden animate-fade-in space-y-8">
-                <div class="prose prose-slate">
-                    <h2 class="text-2xl font-bold text-teal-800">簡易越南語學習 🇻🇳</h2>
-                    <p class="text-slate-600">
-                        雖然富國島觀光發達，但說上一兩句越語能讓當地人更有親切感。以下為您整理了最實用的情境詞彙。
-                    </p>
-                </div>
-
-                <!-- Category Tabs -->
-                <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2">
-                    <button onclick="filterLang('basic')" id="lang-cat-basic" class="lang-cat-active px-4 py-2 rounded-full border border-slate-200 text-xs font-bold transition-all whitespace-nowrap">基本問候</button>
-                    <button onclick="filterLang('food')" id="lang-cat-food" class="px-4 py-2 rounded-full border border-slate-200 text-xs font-bold transition-all whitespace-nowrap text-slate-500">餐廳點餐</button>
-                    <button onclick="filterLang('spa')" id="lang-cat-spa" class="px-4 py-2 rounded-full border border-slate-200 text-xs font-bold transition-all whitespace-nowrap text-slate-500">老婆按摩專區</button>
-                    <button onclick="filterLang('shop')" id="lang-cat-shop" class="px-4 py-2 rounded-full border border-slate-200 text-xs font-bold transition-all whitespace-nowrap text-slate-500">購物/交通</button>
-                </div>
-
-                <!-- Language List -->
-                <div id="language-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 animate-fade-in">
-                    <!-- JS Generated -->
-                </div>
-
-                <div class="bg-indigo-50 p-4 rounded-2xl border border-indigo-100 flex items-start gap-3">
-                    <span class="text-xl">💡</span>
-                    <p class="text-xs text-indigo-800 italic leading-relaxed">
-                        <b>小提醒：</b>越南語有六個聲調，中文諧音僅供參考。如果不通，直接拿出這個介面指給對方看也沒問題！
-                    </p>
-                </div>
-            </section>
-
-            <!-- SECTION: ITINERARY (Previously Built) -->
-            <section id="section-itinerary" class="hidden animate-fade-in space-y-6">
-                <!-- Day Selector -->
-                <div class="flex overflow-x-auto gap-3 pb-4 no-scrollbar">
-                    <button onclick="selectDay(1)" id="btn-day-1" class="day-active shrink-0 w-16 h-16 rounded-2xl flex flex-col items-center justify-center transition-all">
-                        <span class="text-xs font-bold uppercase opacity-80">Day</span>
-                        <span class="text-xl font-black">1</span>
-                    </button>
-                    <div id="day-selector-container" class="flex gap-3"></div>
-                </div>
-                <!-- Day Detail Card -->
-                <div id="day-detail-card" class="bg-white border border-slate-200 rounded-3xl p-6 shadow-xl relative min-h-[400px]">
-                    <div id="day-content"></div>
-                </div>
-            </section>
-
-            <!-- SECTION: BUDGET (Previously Built) -->
-            <section id="section-budget" class="hidden animate-fade-in space-y-8">
-                <div class="bg-teal-900 text-white p-6 rounded-3xl shadow-lg">
-                    <h3 class="font-bold text-lg mb-4">📏 身高判定工具 (7歲 & 5歲適用)</h3>
-                    <div class="flex gap-4 items-end mb-6">
-                        <input type="number" id="height-input" placeholder="身高 (cm)" class="flex-1 bg-white/10 border border-white/20 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-teal-400 text-white font-bold">
-                        <button onclick="checkHeight()" class="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-xl shadow-lg">判定</button>
-                    </div>
-                    <div id="height-result" class="hidden bg-white/10 p-4 rounded-2xl border border-white/10 text-center animate-fade-in text-lg font-bold"></div>
-                </div>
-                <div class="bg-white border border-slate-200 p-6 rounded-3xl shadow-sm">
-                    <div class="chart-container"><canvas id="budgetChart"></canvas></div>
-                </div>
-            </section>
-
-            <!-- SECTION: GUIDE (Previously Built) -->
-            <section id="section-guide" class="hidden animate-fade-in space-y-10">
-                <div id="checklist-container" class="bg-white border border-slate-200 rounded-3xl overflow-hidden shadow-sm divide-y divide-slate-100"></div>
-                <div>
-                    <h3 class="font-bold text-lg mb-4">💆‍♀️ 老婆按摩推薦</h3>
-                    <div id="spa-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-                </div>
-                <div>
-                    <h3 class="font-bold text-lg mb-4">🍔 親子餐廳推薦</h3>
-                    <div id="food-list-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-                </div>
-            </section>
-
-        </main>
-
-        <footer class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md border-t border-slate-100 p-4 text-center z-40 max-w-4xl mx-auto rounded-t-3xl shadow-[0_-4px_10px_rgba(0,0,0,0.05)]">
-            <p class="text-[10px] text-slate-400 font-bold tracking-widest uppercase">2026 富國島冒險 | 為您的全家量身打造</p>
-        </footer>
-    </div>
-
-    <script>
-        // --- Data ---
-        const langData = [
-            { cat: 'basic', cn: '您好', vn: 'Xin chào', sound: '辛超' },
-            { cat: 'basic', cn: '謝謝', vn: 'Cảm ơn', sound: '感恩' },
-            { cat: 'basic', cn: '對不起', vn: 'Xin lỗi', sound: '辛累' },
-            { cat: 'basic', cn: '不客氣', vn: 'Không có gì', sound: '空勾基' },
-            { cat: 'food', cn: '結帳 / 買單', vn: 'Tính tiền', sound: '頂點' },
-            { cat: 'food', cn: '好吃', vn: 'Ngon', sound: '捏安 (鼻音)' },
-            { cat: 'food', cn: '不加辣', vn: 'Không cay', sound: '空蓋' },
-            { cat: 'food', cn: '一、二、三', vn: 'Một, Hai, Ba', sound: '莫、嗨、八' },
-            { cat: 'spa', cn: '加重力道', vn: 'Mạnh lên', sound: '夢連' },
-            { cat: 'spa', cn: '力道輕一點', vn: 'Nhẹ lại', sound: '捏賴' },
-            { cat: 'spa', cn: '這裡很痛', vn: 'Chỗ này đau', sound: '糾耐島' },
-            { cat: 'spa', cn: '很舒服', vn: 'Rất thoải mái', sound: '熱退買' },
-            { cat: 'shop', cn: '廁所在哪裡？', vn: 'Nhà vệ sinh ở đâu?', sound: '家味心鵝島？' },
-            { cat: 'shop', cn: '太貴了', vn: 'Mắc quá', sound: '莫瓜' },
-            { cat: 'shop', cn: '我要去這裡', vn: 'Tôi muốn đi đây', sound: '堆門低低' }
-        ];
-
-        const itineraryData = [
-            { day: 1, date: "3/28 (六)", title: "抵達與威尼斯之夜", mapUrl: "https://maps.app.goo.gl/M4R67e4Wv79vY9N79", items: ["10:05 抵達富國島", "飯店接駁至 Crowne Plaza", "18:30 大世界 (Grand World)"], food: "晚餐：大世界海鮮", tip: "下午補眠，晚上才有體力看秀！" },
-            { day: 2, date: "3/29 (日)", title: "野生動物嘉年華", mapUrl: "https://maps.app.goo.gl/vMms66QYv7U6x87P6", items: ["09:00 珍珠野生動物園 (Safari)", "長頸鹿餐廳餵食體驗"], food: "午餐：長頸鹿餐廳漢堡", tip: "長頸鹿餐廳要早點卡位才有第一排。" },
-            { day: 3, date: "3/30 (一)", title: "奇幻樂園冒險", mapUrl: "https://maps.app.goo.gl/vMms66QYv7U6x87P6", items: ["全天：珍珠奇幻樂園 (VinWonders)", "巨型海龜水族館"], food: "晚餐：樂園內炸雞", tip: "水族館是正午避暑最佳去處。" },
-            { day: 4, date: "3/31 (二)", title: "尋找海星", mapUrl: "https://maps.app.goo.gl/vMms66QYv7U6x87P6", items: ["海星沙灘 (Rach Vem)", "回飯店玩水"], food: "午餐：水上浮動餐廳", tip: "路途較顛，小男生容易暈車記得備藥。" },
-            { day: 5, date: "4/01 (三)", title: "移動與夜市", mapUrl: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9", items: ["移動至南島 Pullman", "陽東夜市逛街"], food: "晚餐：夜市海膽燒烤", tip: "移動日可以先去 Kingkong Mart 補貨。" },
-            { day: 6, date: "4/02 (四)", title: "纜車與煙火秀", mapUrl: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9", items: ["跨海纜車 (太陽世界)", "日落小鎮煙火"], food: "晚餐：日落小鎮披薩", tip: "傍晚日落小鎮風大，帶件薄外套。" },
-            { day: 7, date: "4/03 (五)", title: "最後大採買", mapUrl: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9", items: ["金剛超市掃貨", "沙灘火舞表演"], food: "晚餐：沙灘酒吧", tip: "要把 8 件行李箱額度塞滿腰果和胡椒！" },
-            { day: 8, date: "4/04 (六)", title: "回家", mapUrl: "https://maps.app.goo.gl/3X6mJ8y9Vp2v6nLBA", items: ["08:30 退房前往機場", "10:40 起飛回台中"], food: "早餐：Pullman 自助餐", tip: "預留時間退房，免得太趕。" }
-        ];
-
-        const spaData = [
-            { name: "Hoa Sim Spa (飯店內)", url: "https://maps.app.goo.gl/M4R67e4Wv79vY9N79", color: "teal", desc: "北島首選！老婆按摩時，爸爸可以帶小孩去旁邊玩沙。" },
-            { name: "Pullman Spa (飯店內)", url: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9", color: "blue", desc: "設施頂級。適合換飯店後徹底放鬆。" },
-            { name: "Heart & Soul Spa", url: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9", color: "rose", desc: "陽東鎮高評價店。CP 值極高。" }
-        ];
-
-        const foodData = [
-            { name: "長頸鹿餐廳", url: "https://maps.app.goo.gl/vMms66QYv7U6x87P6", color: "orange", desc: "必去！全家邊吃漢堡邊餵長頸鹿。" },
-            { name: "Bun Quay Thanh Hung", url: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9", color: "teal", desc: "名產小卷粉。湯頭鮮美，小孩也很愛。" },
-            { name: "Draft Beer (日落小鎮)", url: "https://maps.app.goo.gl/6m9z9V9V9v9v9v9v9", color: "blue", desc: "看日落喝啤酒，有披薩小孩最保險。" }
-        ];
-
-        const packingList = ["護照/美金/越盾", "泳衣/防曬/薄外套", "常備藥品(止瀉/止痛)", "Grab App 安裝註冊"];
-
-        // --- Logic ---
-        function showSection(id) {
-            ['overview', 'itinerary', 'budget', 'guide', 'language'].forEach(s => {
-                document.getElementById(`section-${s}`).classList.add('hidden');
-                document.getElementById(`nav-${s}`).classList.remove('tab-active');
-                document.getElementById(`nav-${s}`).classList.add('text-slate-400');
-            });
-            document.getElementById(`section-${id}`).classList.remove('hidden');
-            document.getElementById(`nav-${id}`).classList.add('tab-active');
-            document.getElementById(`nav-${id}`).classList.remove('text-slate-400');
-        }
-
-        function filterLang(cat) {
-            ['basic', 'food', 'spa', 'shop'].forEach(c => {
-                document.getElementById(`lang-cat-${c}`).classList.remove('lang-cat-active');
-                document.getElementById(`lang-cat-${c}`).classList.add('text-slate-500');
-            });
-            document.getElementById(`lang-cat-${cat}`).classList.add('lang-cat-active');
-            document.getElementById(`lang-cat-${cat}`).classList.remove('text-slate-500');
-            renderLang(cat);
-        }
-
-        function renderLang(cat) {
-            const list = document.getElementById('language-list');
-            list.innerHTML = langData.filter(d => d.cat === cat).map(d => `
-                <div class="bg-white border border-slate-100 p-4 rounded-2xl shadow-sm hover:border-orange-200 transition-all">
-                    <div class="text-[10px] text-slate-400 font-bold mb-1">${d.cn}</div>
-                    <div class="text-xl font-bold text-slate-800 mb-1">${d.vn}</div>
-                    <div class="text-xs text-orange-500 font-bold">諧音：${d.sound}</div>
-                </div>
-            `).join('');
-        }
-
-        function selectDay(n) {
-            itineraryData.forEach((_, i) => {
-                const btn = document.getElementById(`btn-day-${i+1}`);
-                if(btn) btn.className = "shrink-0 w-16 h-16 rounded-2xl border border-slate-200 bg-white flex flex-col items-center justify-center transition-all hover:border-teal-400";
-            });
-            const active = document.getElementById(`btn-day-${n}`);
-            active.className = "day-active shrink-0 w-16 h-16 rounded-2xl flex flex-col items-center justify-center transition-all";
-            renderDay(n);
-        }
-
-        function renderDay(n) {
-            const d = itineraryData[n-1];
-            document.getElementById('day-content').innerHTML = `
-                <div class="mb-4">
-                    <span class="text-xs bg-teal-100 text-teal-700 px-2 py-1 rounded font-black">DAY ${d.day}</span>
-                    <h3 class="text-2xl font-black mt-2">${d.title}</h3>
-                </div>
-                <ul class="space-y-2 mb-6 text-sm text-slate-600">
-                    ${d.items.map(i => `<li>• ${i}</li>`).join('')}
+              <div class="card p-4">
+                <div class="text-sm font-semibold">每日不崩潰原則</div>
+                <ul class="mt-2 text-sm text-slate-700 list-disc pl-5 space-y-1">
+                  <li>上午主行程，下午回飯店放鬆</li>
+                  <li>孩子餓就先吃，不硬撐景點</li>
+                  <li>晚餐後按摩輪流去，隔天體力回滿</li>
                 </ul>
-                <div class="grid grid-cols-2 gap-4 border-t pt-4">
-                    <div class="text-xs font-bold text-orange-500">🍕 餐飲：${d.food}</div>
-                    <div class="text-xs italic text-blue-500">“${d.tip}”</div>
+              </div>
+
+              <div class="card p-4">
+                <div class="text-sm font-semibold">快速聯絡與備註</div>
+                <div class="mt-2 text-sm text-slate-700 leading-relaxed">
+                  你可以把飯店接駁、Spa 預約、包車資訊貼在這裡（這頁是單檔 HTML，貼上就能保存）。
                 </div>
-            `;
-        }
+                <textarea id="notes" class="mt-3 w-full h-28 rounded-xl border border-slate-200 p-3 text-sm" placeholder="例如：Crowne Plaza 接駁需提前 12 小時預約…"></textarea>
+                <div class="mt-2 flex justify-end">
+                  <button id="btnSaveNotes" class="btn btnPrimary">保存備註</button>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
 
-        function checkHeight() {
-            const h = parseInt(document.getElementById('height-input').value);
-            const res = document.getElementById('height-result');
-            res.classList.remove('hidden');
-            if (h < 100) res.innerText = "👶 免費入場！";
-            else if (h <= 140) res.innerText = "🧒 兒童票 (約成人的 70%)";
-            else res.innerText = "👨 成人票 (長高啦！)";
-        }
+        <!-- Map links -->
+        <div id="tab_map" class="tabPane hidden">
+          <div class="card p-5">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <div class="text-sm font-semibold">地圖連結（不嵌入地圖，避免遮擋畫面）</div>
+                <div class="mt-1 text-sm text-slate-700">點擊後會在新分頁開啟 Google Maps。</div>
+              </div>
+              <button id="btnCopyLinks" class="btn">複製全部連結</button>
+            </div>
 
-        function initChart() {
-            const ctx = document.getElementById('budgetChart').getContext('2d');
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['珍珠兩園', '纜車', '其他'],
-                    datasets: [{ label: '預算 (NTD)', data: [8000, 2800, 3000], backgroundColor: ['#0d9488', '#f97316', '#64748b'], borderRadius: 10 }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } } }
-            });
-        }
+            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3" id="linkGrid"></div>
 
-        window.onload = () => {
-            // Day selector
-            const container = document.getElementById('day-selector-container');
-            for(let i=2; i<=8; i++) {
-                const b = document.createElement('button');
-                b.id = `btn-day-${i}`;
-                b.onclick = () => selectDay(i);
-                b.className = "shrink-0 w-16 h-16 rounded-2xl border border-slate-200 bg-white flex flex-col items-center justify-center transition-all";
-                b.innerHTML = `<span class="text-xs font-bold uppercase text-slate-400">Day</span><span class="text-xl font-black text-slate-700">${i}</span>`;
-                container.appendChild(b);
-            }
+            <div class="mt-4 text-xs text-slate-500 leading-relaxed">
+              如果你未來想要加「導航路線」：我可以把每一天做成一鍵路線（多點導航連結）。
+            </div>
+          </div>
+        </div>
 
-            // Checklist
-            document.getElementById('checklist-container').innerHTML = packingList.map(i => `<div class="p-4 flex items-center gap-3 text-sm cursor-pointer hover:bg-slate-50" onclick="this.classList.toggle('opacity-30')"><span>☐</span>${i}</div>`).join('');
-            
-            // Spa & Food
-            document.getElementById('spa-list-container').innerHTML = spaData.map(s => `<a href="${s.url}" target="_blank" class="p-4 bg-${s.color}-50 border border-${s.color}-100 rounded-2xl block text-sm font-bold text-${s.color}-900">${s.name}<p class="text-[10px] font-normal mt-1">${s.desc}</p></a>`).join('');
-            document.getElementById('food-list-container').innerHTML = foodData.map(f => `<a href="${f.url}" target="_blank" class="p-4 bg-${f.color}-50 border border-${f.color}-100 rounded-2xl block text-sm font-bold text-${f.color}-900">${f.name}<p class="text-[10px] font-normal mt-1">${f.desc}</p></a>`).join('');
+        <!-- Packing -->
+        <div id="tab_packing" class="tabPane hidden">
+          <div class="card p-5">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <div class="text-sm font-semibold">行李清單（勾選會自動記住）</div>
+                <div class="mt-1 text-sm text-slate-700">建議出發先準備 2–3 箱，回程再買箱子買滿。</div>
+              </div>
+              <div class="flex gap-2">
+                <button id="btnResetPacking" class="btn">全部清除</button>
+              </div>
+            </div>
 
-            renderDay(1);
-            renderLang('basic');
-            initChart();
-        };
-    </script>
+            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3" id="packingGroups"></div>
+
+            <div class="mt-4 text-xs text-slate-500 leading-relaxed">
+              親子加分：替換衣物、零食、濕紙巾、常備藥，準備好通常會少掉很多情緒波動。
+            </div>
+          </div>
+        </div>
+
+        <!-- Grab -->
+        <div id="tab_grab" class="tabPane hidden">
+          <div class="card p-5">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <div class="text-sm font-semibold">Grab 車資估算（台幣）</div>
+                <div class="mt-1 text-sm text-slate-700">區間值做為抓值，會因尖峰、車量、車型而變動。</div>
+              </div>
+              <div class="flex gap-2">
+                <button id="btnUseDefaultRates" class="btn">套用預設</button>
+                <button id="btnSaveRates" class="btn btnPrimary">保存</button>
+              </div>
+            </div>
+
+            <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="rounded-xl border border-slate-200 p-4">
+                <div class="text-sm font-semibold">機場 → Crowne Plaza 區</div>
+                <div class="mt-2 flex gap-2 items-center">
+                  <input id="rate_airport_north" class="w-full rounded-xl border border-slate-200 p-2 text-sm" />
+                </div>
+              </div>
+              <div class="rounded-xl border border-slate-200 p-4">
+                <div class="text-sm font-semibold">北島 → 南島（換飯店）</div>
+                <div class="mt-2 flex gap-2 items-center">
+                  <input id="rate_north_south" class="w-full rounded-xl border border-slate-200 p-2 text-sm" />
+                </div>
+              </div>
+              <div class="rounded-xl border border-slate-200 p-4">
+                <div class="text-sm font-semibold">Pullman → 纜車 / 日落小鎮</div>
+                <div class="mt-2 flex gap-2 items-center">
+                  <input id="rate_south_spots" class="w-full rounded-xl border border-slate-200 p-2 text-sm" />
+                </div>
+              </div>
+              <div class="rounded-xl border border-slate-200 p-4">
+                <div class="text-sm font-semibold">Pullman → 陽東夜市</div>
+                <div class="mt-2 flex gap-2 items-center">
+                  <input id="rate_south_night" class="w-full rounded-xl border border-slate-200 p-2 text-sm" />
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-4 rounded-xl border border-slate-200 p-4 bg-slate-50">
+              <div class="text-sm font-semibold">用法</div>
+              <ol class="mt-2 text-sm text-slate-700 list-decimal pl-5 space-y-1">
+                <li>你可在這裡把「你實際看到的 Grab 價格」填進去，之後會自動保存。</li>
+                <li>Day 1 / Day 8 這種關鍵移動日，建議優先穩定（接駁或 7 人車）。</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <!-- Plan B -->
+        <div id="tab_planb" class="tabPane hidden">
+          <div class="card p-5">
+            <div class="text-sm font-semibold">雨天備案（就地轉室內）</div>
+            <div class="mt-2 text-sm text-slate-700 leading-relaxed">
+              目標是讓孩子情緒穩、行程不中斷：雨大就改室內，雨小就晚點出發。
+            </div>
+
+            <div class="mt-4 grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div class="rounded-xl border border-slate-200 p-4">
+                <div class="text-sm font-semibold">北島</div>
+                <ul class="mt-2 text-sm text-slate-700 list-disc pl-5 space-y-1">
+                  <li>先攻水族館 / 室內區</li>
+                  <li>回飯店泳池（雨停再出門）</li>
+                  <li>晚餐後按摩輪流去</li>
+                </ul>
+              </div>
+              <div class="rounded-xl border border-slate-200 p-4">
+                <div class="text-sm font-semibold">中島（陽東）</div>
+                <ul class="mt-2 text-sm text-slate-700 list-disc pl-5 space-y-1">
+                  <li>超市採買</li>
+                  <li>咖啡店休息</li>
+                  <li>夜市改成短逛 + 按腳</li>
+                </ul>
+              </div>
+              <div class="rounded-xl border border-slate-200 p-4">
+                <div class="text-sm font-semibold">南島</div>
+                <ul class="mt-2 text-sm text-slate-700 list-disc pl-5 space-y-1">
+                  <li>先吃飯、先按摩</li>
+                  <li>戶外行程後移 1–2 小時</li>
+                  <li>雨太大就改飯店放鬆日</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="mt-4 rounded-xl border border-slate-200 p-4 bg-slate-50">
+              <div class="text-sm font-semibold">快速決策規則</div>
+              <ul class="mt-2 text-sm text-slate-700 list-disc pl-5 space-y-1">
+                <li>雨大：直接室內 + 飯店設施，今天就算完成</li>
+                <li>雨小：延後出發，讓孩子先午睡再走戶外</li>
+                <li>孩子累：寧可提早回飯店，隔天會更順</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="mt-5 text-xs text-slate-500">
+        本頁為單一 HTML 檔，可直接離線保存。所有勾選、備註、車資會儲存在瀏覽器本機。
+      </footer>
+    </main>
+  </div>
+
+<script>
+  // ---- Data ----
+  const LINKS = [
+    { name: '富國島機場 (PQC)', q: 'Phu Quoc International Airport' },
+    { name: 'Crowne Plaza Starbay', q: 'Crowne Plaza Phu Quoc Starbay' },
+    { name: 'Pullman Phu Quoc', q: 'Pullman Phu Quoc Beach Resort' },
+    { name: 'Grand World', q: 'Grand World Phu Quoc' },
+    { name: 'VinWonders', q: 'VinWonders Phu Quoc' },
+    { name: 'Safari 動物園', q: 'Vinpearl Safari Phu Quoc' },
+    { name: '陽東夜市', q: 'Phu Quoc Night Market' },
+    { name: 'Kingkong Mart', q: 'Kingkong Mart Phu Quoc' },
+    { name: '跨海纜車 (Hon Thom)', q: 'Sun World Hon Thom Cable Car' },
+    { name: 'Sunset Town', q: 'Sunset Town Phu Quoc' }
+  ];
+
+  const DAYS = [
+    {
+      day: 1, date: '03/28', zone: '北島', title: '抵達與 Grand World 夜間散步',
+      focus: ['機場', 'Crowne Plaza', 'Grand World'],
+      mapQs: ['Phu Quoc International Airport','Crowne Plaza Phu Quoc Starbay','Grand World Phu Quoc'],
+      spa: 'Hoa Sim Spa（飯店內）',
+      food: 'Grand World 以出餐快、孩子先吃飽為優先。',
+      transport: '機場 → 北島建議接駁或 7 人車，穩定最重要。',
+      timeline: [
+        ['10:05','抵達','出關、換匯、買水/小點心'],
+        ['11:30','前往北島飯店','接駁或 7 人車'],
+        ['13:00','飯店放空','泳池/午睡'],
+        ['17:30','Grand World','運河散步與拍照'],
+        ['19:00','晚餐','先吃飽再逛'],
+        ['20:00','夜景','水舞/逛街（看孩子狀態）']
+      ]
+    },
+    {
+      day: 2, date: '03/29', zone: '北島', title: 'Safari 動物園',
+      focus: ['Safari'],
+      mapQs: ['Vinpearl Safari Phu Quoc'],
+      spa: 'Grand World 區或飯店內皆可（不跑遠）。',
+      food: '午餐園區簡餐，下午回飯店補點心。',
+      transport: '北島叫車往返即可。',
+      timeline: [
+        ['08:00','早餐','帶水與防曬'],
+        ['09:00','出發 Safari','越早越舒服'],
+        ['10:00','園內動線','先巴士再步行'],
+        ['12:00','午餐','園區簡餐'],
+        ['15:00','回飯店','泳池/午睡'],
+        ['18:30','晚餐','飯店或 Grand World']
+      ]
+    },
+    {
+      day: 3, date: '03/30', zone: '北島', title: 'VinWonders 樂園全日',
+      focus: ['VinWonders'],
+      mapQs: ['VinWonders Phu Quoc'],
+      spa: '飯店內按摩（最省力）。',
+      food: '午餐園區，晚餐回飯店或 Grand World。',
+      transport: '叫車或接駁往返。',
+      timeline: [
+        ['08:00','早餐','帶泳衣與替換衣物'],
+        ['09:30','入園','先水族館/室內'],
+        ['12:00','午餐','園區簡餐'],
+        ['13:00','水樂園','看天氣與體力'],
+        ['16:30','回飯店','洗澡休息'],
+        ['19:30','按摩','飯店內']
+      ]
+    },
+    {
+      day: 4, date: '03/31', zone: '北島', title: 'Grand World 慢步調探索',
+      focus: ['Grand World'],
+      mapQs: ['Grand World Phu Quoc'],
+      spa: 'Camy Spa（Grand World 旁）或回飯店按。',
+      food: '晚餐先吃飽，再散步拍照。',
+      transport: '短距離移動，單程叫車即可。',
+      timeline: [
+        ['09:00','慢起床','不趕行程'],
+        ['11:00','泳池','孩子放電'],
+        ['16:30','出發','挑涼爽時段'],
+        ['18:00','晚餐','出餐快優先'],
+        ['19:30','散步','運河/建築街區'],
+        ['21:00','回飯店','隔天換飯店要留體力']
+      ]
+    },
+    {
+      day: 5, date: '04/01', zone: '中島/南島', title: '換飯店到 Pullman + 陽東夜市',
+      focus: ['Pullman','陽東夜市'],
+      mapQs: ['Pullman Phu Quoc Beach Resort','Phu Quoc Night Market'],
+      spa: 'Heart & Soul Spa（夜市後按腳）。',
+      food: '夜市邊逛邊吃：海鮮、果汁、椰子冰。',
+      transport: '北島 → 南島建議 7 人車或包車。',
+      timeline: [
+        ['08:30','早餐','整理行李'],
+        ['11:00','出發南島','中午移動較不累'],
+        ['12:30','抵達 Pullman','安頓與點心'],
+        ['15:00','泳池/沙灘','午睡補能量'],
+        ['18:00','夜市','邊逛邊吃'],
+        ['20:30','按腳','夜市後最舒服']
+      ]
+    },
+    {
+      day: 6, date: '04/02', zone: '南島', title: '纜車 + 香島水樂園 + Sunset Town 夜間秀',
+      focus: ['纜車','Sunset Town'],
+      mapQs: ['Sun World Hon Thom Cable Car','Sunset Town Phu Quoc'],
+      spa: 'Sona Spa（日落小鎮）或回飯店。',
+      food: '先吃晚餐，再接夜間秀與煙火。',
+      transport: '南島點位集中，叫車往返。',
+      timeline: [
+        ['09:30','慢起床','上午留飯店'],
+        ['12:00','午餐','簡單吃'],
+        ['14:30','出發','避開最熱'],
+        ['15:30','纜車','拍照吹風'],
+        ['18:30','晚餐','先吃飯'],
+        ['21:00','夜間秀','看孩子狀態決定停留']
+      ]
+    },
+    {
+      day: 7, date: '04/03', zone: '中島/南島', title: 'Kingkong Mart 採買 + 飯店放鬆',
+      focus: ['Kingkong Mart'],
+      mapQs: ['Kingkong Mart Phu Quoc'],
+      spa: 'Pullman Spa（最後一晚最推薦）。',
+      food: '晚餐飯店或市區二選一，別再奔波。',
+      transport: '白天採買，回飯店就放鬆。',
+      timeline: [
+        ['09:00','早餐','列採買清單'],
+        ['11:00','採買','一次買齊'],
+        ['14:00','回飯店','午睡/泳池'],
+        ['18:30','晚餐','飯店/市區'],
+        ['20:30','按摩','Pullman Spa']
+      ]
+    },
+    {
+      day: 8, date: '04/04', zone: '回國', title: '早起送機回台中',
+      focus: ['機場'],
+      mapQs: ['Phu Quoc International Airport'],
+      spa: '不安排。',
+      food: '早餐飯店為主（可打包）。',
+      transport: '建議飯店送機（早班機更穩）。',
+      timeline: [
+        ['06:30','早餐','可請飯店打包'],
+        ['07:30','出發機場','留緩衝'],
+        ['10:40','起飛','回台中']
+      ]
+    }
+  ];
+
+  // ---- Tabs ----
+  const panes = {
+    itinerary: document.getElementById('tab_itinerary'),
+    map: document.getElementById('tab_map'),
+    packing: document.getElementById('tab_packing'),
+    grab: document.getElementById('tab_grab'),
+    planb: document.getElementById('tab_planb')
+  };
+
+  function setTab(name){
+    Object.entries(panes).forEach(([k,el])=> el.classList.toggle('hidden', k !== name));
+    document.querySelectorAll('.tabBtn').forEach(b=>{
+      const active = b.dataset.tab === name;
+      b.classList.toggle('btnPrimary', active);
+    });
+  }
+  document.querySelectorAll('.tabBtn').forEach(b=> b.addEventListener('click', ()=> setTab(b.dataset.tab)));
+
+  // ---- Notes ----
+  const NOTES_KEY = 'phuquoc_v3_notes';
+  const notesEl = document.getElementById('notes');
+  const btnSaveNotes = document.getElementById('btnSaveNotes');
+  function loadNotes(){
+    try { return localStorage.getItem(NOTES_KEY) || ''; } catch { return ''; }
+  }
+  function saveNotes(v){
+    try { localStorage.setItem(NOTES_KEY, v); } catch {}
+  }
+  notesEl.value = loadNotes();
+  btnSaveNotes.addEventListener('click', ()=>{
+    saveNotes(notesEl.value);
+    btnSaveNotes.textContent = '已保存';
+    setTimeout(()=> btnSaveNotes.textContent = '保存備註', 900);
+  });
+
+  // ---- Itinerary render ----
+  const dayList = document.getElementById('dayList');
+
+  function gmapUrl(q){
+    return `https://maps.google.com/?q=${encodeURIComponent(q)}`;
+  }
+
+  function dayCard(d){
+    const wrap = document.createElement('div');
+    wrap.className = 'card p-4';
+
+    const header = document.createElement('div');
+    header.className = 'flex flex-wrap items-start justify-between gap-3';
+
+    const left = document.createElement('div');
+    left.innerHTML = `
+      <div class="flex items-center gap-2 flex-wrap">
+        <div class="text-sm font-semibold">Day ${d.day}</div>
+        <span class="pill">${d.date}</span>
+        <span class="pill">${d.zone}</span>
+      </div>
+      <div class="mt-2 text-base font-semibold">${d.title}</div>
+      <div class="mt-2 text-sm text-slate-700">按摩：<span class="font-medium">${d.spa}</span></div>
+    `;
+
+    const right = document.createElement('div');
+    right.className = 'flex items-center gap-2';
+
+    const toggle = document.createElement('button');
+    toggle.className = 'btn';
+    toggle.textContent = '展開時間軸';
+
+    const openMaps = document.createElement('button');
+    openMaps.className = 'btn btnPrimary';
+    openMaps.textContent = 'Google 地圖';
+    openMaps.addEventListener('click', ()=> window.open(gmapUrl(d.mapQs[0]), '_blank'));
+
+    right.appendChild(toggle);
+    right.appendChild(openMaps);
+
+    header.appendChild(left);
+    header.appendChild(right);
+
+    const links = document.createElement('div');
+    links.className = 'mt-3 flex flex-wrap gap-2';
+    d.mapQs.forEach(q=>{
+      const a = document.createElement('a');
+      a.className = 'linkbtn';
+      a.href = gmapUrl(q);
+      a.target = '_blank';
+      a.rel = 'noreferrer';
+      a.textContent = q;
+      links.appendChild(a);
+    });
+
+    const body = document.createElement('div');
+    body.className = 'mt-4 hidden';
+
+    const grid = document.createElement('div');
+    grid.className = 'grid grid-cols-1 lg:grid-cols-2 gap-3';
+
+    const timeline = document.createElement('div');
+    timeline.className = 'rounded-xl border border-slate-200 p-3';
+    timeline.innerHTML = `<div class="text-sm font-semibold">時間軸</div>`;
+
+    const tl = document.createElement('div');
+    tl.className = 'mt-3 space-y-2';
+    d.timeline.forEach(([t, title, hint])=>{
+      const row = document.createElement('div');
+      row.className = 'flex gap-3 items-start';
+      row.innerHTML = `
+        <div class="w-14 shrink-0 text-xs font-semibold text-slate-700">${t}</div>
+        <div class="flex-1 rounded-xl border border-slate-200 px-3 py-2 bg-white">
+          <div class="text-sm font-medium">${title}</div>
+          <div class="text-xs text-slate-500 mt-0.5">${hint}</div>
+        </div>
+      `;
+      tl.appendChild(row);
+    });
+    timeline.appendChild(tl);
+
+    const tips = document.createElement('div');
+    tips.className = 'rounded-xl border border-slate-200 p-3';
+    tips.innerHTML = `
+      <div class="text-sm font-semibold">當日提示</div>
+      <div class="mt-2 text-sm text-slate-700">吃飯：${d.food}</div>
+      <div class="mt-2 text-sm text-slate-700">交通：${d.transport}</div>
+      <div class="mt-3 text-xs text-slate-500">建議：孩子累就提早回飯店，隔天會更順。</div>
+    `;
+
+    grid.appendChild(timeline);
+    grid.appendChild(tips);
+
+    body.appendChild(grid);
+
+    toggle.addEventListener('click', ()=>{
+      const open = !body.classList.contains('hidden');
+      body.classList.toggle('hidden');
+      toggle.textContent = body.classList.contains('hidden') ? '展開時間軸' : '收合時間軸';
+    });
+
+    wrap.appendChild(header);
+    wrap.appendChild(links);
+    wrap.appendChild(body);
+
+    return wrap;
+  }
+
+  function renderDays(){
+    dayList.innerHTML = '';
+    DAYS.forEach(d=> dayList.appendChild(dayCard(d)));
+  }
+
+  document.getElementById('btnOpenAll').addEventListener('click', ()=>{
+    document.querySelectorAll('#dayList .card').forEach(card=>{
+      const body = card.querySelector('div.mt-4');
+      const btn = card.querySelector('button.btn');
+      if (body && btn){
+        body.classList.remove('hidden');
+        btn.textContent = '收合時間軸';
+      }
+    });
+  });
+  document.getElementById('btnCloseAll').addEventListener('click', ()=>{
+    document.querySelectorAll('#dayList .card').forEach(card=>{
+      const body = card.querySelector('div.mt-4');
+      const btn = card.querySelector('button.btn');
+      if (body && btn){
+        body.classList.add('hidden');
+        btn.textContent = '展開時間軸';
+      }
+    });
+  });
+
+  // ---- Map links tab ----
+  const linkGrid = document.getElementById('linkGrid');
+  function renderLinks(){
+    linkGrid.innerHTML = '';
+    LINKS.forEach(({name,q})=>{
+      const card = document.createElement('div');
+      card.className = 'rounded-xl border border-slate-200 p-4';
+      card.innerHTML = `
+        <div class="text-sm font-semibold">${name}</div>
+        <div class="mt-2">
+          <a class="linkbtn" target="_blank" rel="noreferrer" href="${gmapUrl(q)}">開啟 Google Maps</a>
+        </div>
+        <div class="mt-3 text-xs text-slate-500 break-words">${gmapUrl(q)}</div>
+      `;
+      linkGrid.appendChild(card);
+    });
+  }
+
+  document.getElementById('btnCopyLinks').addEventListener('click', async ()=>{
+    const text = LINKS.map(x=> `${x.name}: ${gmapUrl(x.q)}`).join('\n');
+    try {
+      await navigator.clipboard.writeText(text);
+      const btn = document.getElementById('btnCopyLinks');
+      const old = btn.textContent;
+      btn.textContent = '已複製';
+      setTimeout(()=> btn.textContent = old, 900);
+    } catch {
+      alert('瀏覽器不允許自動複製。你可以手動選取下方連結。');
+    }
+  });
+
+  // ---- Packing ----
+  const PACK_KEY = 'phuquoc_v3_packing';
+  const PACKING = [
+    { title: '證件與金錢', items: ['護照與影本','機票/訂房資料（電子備份）','旅遊保險資料','信用卡與備用卡','少量現金（換匯用）'] },
+    { title: '親子必備', items: ['防蚊液','防曬乳','遮陽帽','水壺','濕紙巾/面紙','暈車藥/退燒藥/常備藥','小零食（登機與車程）'] },
+    { title: '海灘與泳池', items: ['泳衣（每人至少 2 套）','防水拖鞋','泳鏡','快乾毛巾','防水袋/防水手機套','替換衣物（孩子多帶）'] },
+    { title: '衣物與日常', items: ['輕便短袖短褲','薄外套（冷氣房）','睡衣','輕便運動鞋','拖鞋','洗漱用品（或用飯店）'] },
+    { title: '3C 與充電', items: ['手機充電器','行動電源','相機/運動相機','充電線','插頭轉接（視需要）'] },
+    { title: '飛機與車程', items: ['耳機','孩子小玩具/貼紙書','頸枕','口罩（視需要）','垃圾袋/夾鏈袋'] },
+  ];
+
+  function loadPackState(){
+    try { return JSON.parse(localStorage.getItem(PACK_KEY) || '{}'); } catch { return {}; }
+  }
+  function savePackState(s){
+    try { localStorage.setItem(PACK_KEY, JSON.stringify(s)); } catch {}
+  }
+
+  const packingGroups = document.getElementById('packingGroups');
+  function renderPacking(){
+    const st = loadPackState();
+    packingGroups.innerHTML = '';
+
+    PACKING.forEach((g, gi)=>{
+      const card = document.createElement('div');
+      card.className = 'rounded-xl border border-slate-200 p-4';
+      card.innerHTML = `<div class="text-sm font-semibold">${g.title}</div>`;
+      const list = document.createElement('div');
+      list.className = 'mt-3 space-y-2';
+
+      g.items.forEach((label, ii)=>{
+        const id = `g${gi}_i${ii}`;
+        const checked = !!st[id];
+        const row = document.createElement('label');
+        row.className = 'flex items-start gap-3 cursor-pointer select-none';
+        row.innerHTML = `
+          <input type="checkbox" class="mt-0.5 h-4 w-4 rounded border-slate-300" ${checked ? 'checked' : ''} data-pack-id="${id}">
+          <div class="text-sm text-slate-700">${label}</div>
+        `;
+        list.appendChild(row);
+      });
+
+      card.appendChild(list);
+      packingGroups.appendChild(card);
+    });
+
+    packingGroups.querySelectorAll('input[type=checkbox][data-pack-id]').forEach(cb=>{
+      cb.addEventListener('change', (e)=>{
+        const id = e.target.getAttribute('data-pack-id');
+        const st2 = loadPackState();
+        st2[id] = e.target.checked;
+        savePackState(st2);
+      });
+    });
+  }
+
+  document.getElementById('btnResetPacking').addEventListener('click', ()=>{
+    try { localStorage.removeItem(PACK_KEY); } catch {}
+    renderPacking();
+  });
+
+  // ---- Grab rates ----
+  const RATE_KEY = 'phuquoc_v3_rates';
+  const defaultRates = {
+    airport_north: '500 - 700',
+    north_south: '600 - 800',
+    south_spots: '150 - 300',
+    south_night: '200 - 350'
+  };
+
+  function loadRates(){
+    try { return JSON.parse(localStorage.getItem(RATE_KEY) || 'null') || defaultRates; } catch { return defaultRates; }
+  }
+  function saveRates(r){
+    try { localStorage.setItem(RATE_KEY, JSON.stringify(r)); } catch {}
+  }
+
+  const rate_airport_north = document.getElementById('rate_airport_north');
+  const rate_north_south = document.getElementById('rate_north_south');
+  const rate_south_spots = document.getElementById('rate_south_spots');
+  const rate_south_night = document.getElementById('rate_south_night');
+
+  function applyRates(r){
+    rate_airport_north.value = r.airport_north;
+    rate_north_south.value = r.north_south;
+    rate_south_spots.value = r.south_spots;
+    rate_south_night.value = r.south_night;
+  }
+
+  document.getElementById('btnUseDefaultRates').addEventListener('click', ()=>{
+    applyRates(defaultRates);
+  });
+
+  document.getElementById('btnSaveRates').addEventListener('click', ()=>{
+    const r = {
+      airport_north: rate_airport_north.value.trim() || defaultRates.airport_north,
+      north_south: rate_north_south.value.trim() || defaultRates.north_south,
+      south_spots: rate_south_spots.value.trim() || defaultRates.south_spots,
+      south_night: rate_south_night.value.trim() || defaultRates.south_night,
+    };
+    saveRates(r);
+    const btn = document.getElementById('btnSaveRates');
+    const old = btn.textContent;
+    btn.textContent = '已保存';
+    setTimeout(()=> btn.textContent = old, 900);
+  });
+
+  // ---- Init ----
+  renderDays();
+  renderLinks();
+  renderPacking();
+  applyRates(loadRates());
+  setTab('itinerary');
+</script>
 </body>
 </html>
