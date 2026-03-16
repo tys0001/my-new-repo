@@ -53,6 +53,39 @@ const familyNotes = [
   "每天保留按摩或飯店休息，這次網站設計也以慢玩和清爽閱讀為主。",
 ];
 
+const tripPhases = [
+  {
+    title: "北島前半段",
+    range: "Day 1 - Day 4",
+    tone: "玩樂園、看動物、拍 Grand World",
+    points: ["Crowne Plaza Starbay", "Safari / VinWonders", "竹之傳奇 / 運河夜景"],
+  },
+  {
+    title: "南島後半段",
+    range: "Day 5 - Day 8",
+    tone: "夜市、纜車、煙火、採買收尾",
+    points: ["Pullman 海景放鬆", "Sunset Town 煙火秀", "Kingkong Mart 大採買"],
+  },
+];
+
+const planningHighlights = [
+  {
+    label: "最適合小孩",
+    title: "Safari 長頸鹿餵食 + VinWonders 水族館",
+    desc: "把孩子投入度最高的動物互動與室內展館放在北島前段，體力與情緒都比較穩。",
+  },
+  {
+    label: "最適合大人",
+    title: "每天都有按摩與放鬆節點",
+    desc: "從 Hoa Sim Spa、Camy Spa 到 Pullman Spa，整體不是硬衝景點，而是把恢復也排進旅程。",
+  },
+  {
+    label: "旅程高潮",
+    title: "南島纜車、水樂園、煙火秀一條龍",
+    desc: "把最具記憶點的視覺體驗集中在 Day 6，讓家族旅行有一個真正的高峰日。",
+  },
+];
+
 const accommodations = [
   {
     name: "Crowne Plaza Phu Quoc Starbay",
@@ -481,6 +514,60 @@ function App() {
 
       <main className="px-4 pb-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl space-y-8">
+          <section className="section-card overflow-hidden">
+            <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
+              <div>
+                <div className="section-heading">
+                  <p className="eyebrow">旅程節奏</p>
+                  <h2>先把北島與南島分成兩段看，整體就很清楚</h2>
+                </div>
+                <p className="max-w-2xl text-sm leading-8 text-slate-600">
+                  這一版網站的升級重點，是讓讀者不用一條條看完時間軸，也能先理解整趟旅程的節奏切換。
+                  前段集中玩，後段集中享受，對家族旅行來說會比平均分配景點更順。
+                </p>
+
+                <div className="mt-6 space-y-4">
+                  {tripPhases.map((phase, index) => (
+                    <article
+                      key={phase.title}
+                      className={`rounded-[1.6rem] p-5 ${index === 0 ? "bg-sea-900 text-white" : "bg-white ring-1 ring-sea-100"}`}
+                    >
+                      <div className="flex items-center justify-between gap-3">
+                        <div>
+                          <p className={`text-xs uppercase tracking-[0.3em] ${index === 0 ? "text-sea-100" : "text-coral"}`}>{phase.range}</p>
+                          <h3 className={`mt-2 text-2xl font-semibold ${index === 0 ? "text-white" : "text-sea-900"}`}>{phase.title}</h3>
+                        </div>
+                        <span className={`rounded-full px-3 py-1 text-xs font-semibold ${index === 0 ? "bg-white/15 text-white" : "bg-sea-50 text-sea-800"}`}>
+                          {phase.tone}
+                        </span>
+                      </div>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {phase.points.map((point) => (
+                          <span
+                            key={point}
+                            className={`rounded-full px-3 py-2 text-sm ${index === 0 ? "bg-white/10 text-sea-50" : "bg-sea-50 text-slate-700"}`}
+                          >
+                            {point}
+                          </span>
+                        ))}
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-3 lg:grid-cols-1">
+                {planningHighlights.map((item) => (
+                  <article key={item.title} className="rounded-[1.6rem] border border-sea-100 bg-[linear-gradient(180deg,_rgba(255,255,255,1)_0%,_rgba(238,251,251,0.9)_100%)] p-5 shadow-sm">
+                    <p className="text-xs uppercase tracking-[0.28em] text-coral">{item.label}</p>
+                    <h3 className="mt-3 text-xl font-semibold text-sea-900">{item.title}</h3>
+                    <p className="mt-3 text-sm leading-7 text-slate-600">{item.desc}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+
           <section className="section-card overflow-hidden">
             <div className="grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
               <div>
