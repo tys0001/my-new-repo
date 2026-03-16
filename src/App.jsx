@@ -23,6 +23,36 @@ const flightCards = [
   },
 ];
 
+const photoMoments = [
+  {
+    title: "海島放空的起手式",
+    label: "Beach Mood",
+    image:
+      "https://images.unsplash.com/photo-1732243395944-cb3ff9311091?auto=format&fit=crop&w=1200&q=80",
+    desc: "前段住北島時，把海邊與飯店泳池當作調整節奏的主場。",
+  },
+  {
+    title: "Grand World 夜景氛圍",
+    label: "Night Walk",
+    image:
+      "https://images.unsplash.com/photo-1693282814784-649be45a459b?auto=format&fit=crop&w=1200&q=80",
+    desc: "運河、燈光與散步節奏很適合家族旅行，不需要硬排太多點。",
+  },
+  {
+    title: "煙火秀的旅行高潮",
+    label: "Show Time",
+    image:
+      "https://images.unsplash.com/photo-1704765707896-f0aaab64d7b2?auto=format&fit=crop&w=1200&q=80",
+    desc: "把跨海纜車、日落小鎮和海洋之吻煙火秀串成南島代表日。",
+  },
+];
+
+const familyNotes = [
+  "北島前半段主打樂園與動物園，移動集中、孩子比較不累。",
+  "南島後半段改成夜市、煙火、採買與泳池，節奏更像度假收尾。",
+  "每天保留按摩或飯店休息，這次網站設計也以慢玩和清爽閱讀為主。",
+];
+
 const accommodations = [
   {
     name: "Crowne Plaza Phu Quoc Starbay",
@@ -392,7 +422,7 @@ function App() {
 
           <section
             id="top"
-            className="grid gap-6 overflow-hidden rounded-[2rem] bg-white/75 p-6 shadow-float backdrop-blur md:grid-cols-[1.1fr_0.9fr] md:p-10"
+            className="grid gap-6 overflow-hidden rounded-[2.2rem] bg-white/75 p-6 shadow-float backdrop-blur md:grid-cols-[1.02fr_0.98fr] md:p-10"
           >
             <div className="space-y-5">
               <p className="inline-flex rounded-full bg-sea-100 px-4 py-1 text-sm font-medium text-sea-800">
@@ -422,14 +452,20 @@ function App() {
 
             <div className="relative grid gap-4 md:pl-6">
               <div className="absolute -left-6 top-0 hidden h-20 w-20 rounded-full bg-coral/20 blur-2xl md:block" />
-              <div className="rounded-[1.75rem] bg-sea-900 p-6 text-white">
-                <p className="text-sm uppercase tracking-[0.25em] text-sea-200">本次企劃亮點</p>
-                <ul className="mt-4 space-y-3 text-sm leading-7 text-sea-50">
-                  <li>北島 4 晚 + 南島 3 晚，景點分區移動更順</li>
-                  <li>每天都有按摩安排，兼顧大人恢復與孩子放電</li>
-                  <li>移除海星沙灘與泰迪熊硬排，旅遊節奏更舒服</li>
-                </ul>
+              <div className="relative overflow-hidden rounded-[1.9rem] bg-sea-900 shadow-xl">
+                <img
+                  src={photoMoments[0].image}
+                  alt="富國島海灘與海島度假氛圍"
+                  className="h-64 w-full object-cover md:h-[23rem]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-sea-950 via-sea-950/25 to-transparent" />
+                <div className="absolute inset-x-0 bottom-0 p-6 text-white">
+                  <p className="text-xs uppercase tracking-[0.32em] text-sea-100">{photoMoments[0].label}</p>
+                  <h2 className="mt-3 font-display text-3xl leading-tight md:text-4xl">{photoMoments[0].title}</h2>
+                  <p className="mt-3 max-w-md text-sm leading-7 text-sea-50">{photoMoments[0].desc}</p>
+                </div>
               </div>
+
               <div className="grid gap-3 sm:grid-cols-2">
                 {overviewStats.map((item) => (
                   <div key={item.label} className="rounded-[1.5rem] bg-sea-50 p-4">
@@ -445,6 +481,44 @@ function App() {
 
       <main className="px-4 pb-16 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-7xl space-y-8">
+          <section className="section-card overflow-hidden">
+            <div className="grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
+              <div>
+                <div className="section-heading">
+                  <p className="eyebrow">旅行畫面</p>
+                  <h2>把這趟旅程做得更像真的出發前企劃網站</h2>
+                </div>
+                <p className="max-w-2xl text-sm leading-8 text-slate-600">
+                  我把網站往更完整的旅行提案頁升級，加入海島、夜景與煙火氣氛照片，讓整體不只是在看行程表，
+                  而是真的能感受到北島與南島兩段不同的旅行情緒。
+                </p>
+                <div className="mt-6 grid gap-3">
+                  {familyNotes.map((note) => (
+                    <div key={note} className="rounded-[1.4rem] border border-sea-100 bg-sea-50 px-4 py-3 text-sm leading-7 text-slate-700">
+                      {note}
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid gap-4 sm:grid-cols-2">
+                {photoMoments.slice(1).map((photo, index) => (
+                  <article
+                    key={photo.title}
+                    className={`group overflow-hidden rounded-[1.7rem] bg-white shadow-sm ring-1 ring-sea-100 ${index === 0 ? "sm:translate-y-6" : ""}`}
+                  >
+                    <img src={photo.image} alt={photo.title} className="h-52 w-full object-cover transition duration-500 group-hover:scale-105" />
+                    <div className="space-y-2 p-4">
+                      <p className="text-xs uppercase tracking-[0.25em] text-coral">{photo.label}</p>
+                      <h3 className="text-lg font-semibold text-sea-900">{photo.title}</h3>
+                      <p className="text-sm leading-7 text-slate-600">{photo.desc}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+
           <section id="overview" className="section-card">
             <div className="section-heading">
               <p className="eyebrow">行程總覽</p>

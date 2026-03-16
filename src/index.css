@@ -12,7 +12,8 @@ body {
   margin: 0;
   min-width: 320px;
   background:
-    radial-gradient(circle at top, rgba(127, 212, 218, 0.18), transparent 30%),
+    radial-gradient(circle at top, rgba(127, 212, 218, 0.2), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(240, 140, 108, 0.12), transparent 24%),
     #f6efe6;
   color: #20303c;
 }
@@ -46,11 +47,11 @@ a {
 
 @layer components {
   .glass {
-    @apply border border-white/60 bg-white/65 shadow-lg backdrop-blur;
+    @apply border border-white/60 bg-white/70 shadow-lg backdrop-blur;
   }
 
   .section-card {
-    @apply rounded-[2rem] bg-white/70 p-6 shadow-float backdrop-blur md:p-8;
+    @apply rounded-[2rem] border border-white/50 bg-white/70 p-6 shadow-float backdrop-blur md:p-8;
   }
 
   .section-heading {
@@ -66,14 +67,14 @@ a {
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-full bg-sea-900 px-5 py-3 text-sm font-semibold text-white transition hover:bg-sea-800;
+    @apply inline-flex items-center justify-center rounded-full bg-sea-900 px-5 py-3 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:bg-sea-800;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center rounded-full border border-sea-200 bg-white px-5 py-3 text-sm font-semibold text-sea-900 transition hover:border-sea-300 hover:bg-sea-50;
+    @apply inline-flex items-center justify-center rounded-full border border-sea-200 bg-white px-5 py-3 text-sm font-semibold text-sea-900 transition hover:-translate-y-0.5 hover:border-sea-300 hover:bg-sea-50;
   }
 
   .btn-map {
-    @apply inline-flex items-center justify-center rounded-full bg-coral px-4 py-2 text-sm font-semibold text-white transition hover:brightness-95;
+    @apply inline-flex items-center justify-center rounded-full bg-coral px-4 py-2 text-sm font-semibold text-white transition hover:-translate-y-0.5 hover:brightness-95;
   }
 }
