@@ -156,6 +156,8 @@ const tripDays = [
     date: "03/28（六）",
     title: "抵達富國島，晚上去富國大世界看水舞",
     theme: "抵達日 + 北島夜景",
+    image:
+      "https://images.unsplash.com/photo-1732243395944-cb3ff9311091?auto=format&fit=crop&w=1200&q=80",
     summary: "落地後以飯店放空、調整節奏為主，晚上輕鬆逛 Grand World，看威尼斯水舞。",
     map: "https://maps.google.com/?q=Grand+World+Phu+Quoc",
     timeline: [
@@ -190,6 +192,8 @@ const tripDays = [
     date: "03/29（日）",
     title: "Safari 野生動物園與長頸鹿餵食",
     theme: "動物互動日",
+    image:
+      "https://images.unsplash.com/photo-1548194015-61743be6ff2b?auto=format&fit=crop&w=1200&q=80",
     summary: "以 Safari 為主角，孩子有足夠時間搭遊園車、看動物、餵長頸鹿。",
     map: "https://maps.google.com/?q=Vinpearl+Safari+Phu+Quoc",
     timeline: [
@@ -224,6 +228,8 @@ const tripDays = [
     date: "03/30（一）",
     title: "VinWonders 城堡樂園全日遊",
     theme: "樂園衝刺日",
+    image:
+      "https://images.unsplash.com/photo-1696247139933-bdbe04c9b4db?auto=format&fit=crop&w=1200&q=80",
     summary: "整天留給 VinWonders，重點放在城堡樂園、水族館與親子友善設施。",
     map: "https://maps.google.com/?q=VinWonders+Phu+Quoc",
     timeline: [
@@ -258,6 +264,8 @@ const tripDays = [
     date: "03/31（二）",
     title: "大世界深度探索與竹之傳奇",
     theme: "建築散步日",
+    image:
+      "https://images.unsplash.com/photo-1693282814784-649be45a459b?auto=format&fit=crop&w=1200&q=80",
     summary: "不強求泰迪熊博物館，改成慢慢走逛竹之傳奇、藝術公園與運河區。",
     map: "https://maps.google.com/?q=Grand+World+Phu+Quoc",
     timeline: [
@@ -292,6 +300,8 @@ const tripDays = [
     date: "04/01（三）",
     title: "移動到南島 Pullman，晚上逛陽東夜市",
     theme: "換宿日 + 美食夜市",
+    image:
+      "https://images.unsplash.com/photo-1703857461195-5a8c10d95660?auto=format&fit=crop&w=1200&q=80",
     summary: "上午從北島移防南島，下午入住 Pullman，晚上到陽東夜市吃東西。",
     map: "https://maps.google.com/?q=Duong+Dong+Night+Market+Phu+Quoc",
     timeline: [
@@ -326,6 +336,8 @@ const tripDays = [
     date: "04/02（四）",
     title: "跨海纜車、香島水樂園與海洋之吻煙火秀",
     theme: "南島重點大日",
+    image:
+      "https://images.unsplash.com/photo-1704765707896-f0aaab64d7b2?auto=format&fit=crop&w=1200&q=80",
     summary: "這天是整趟最滿的一天，把纜車、水樂園、日落小鎮與煙火秀排在一起。",
     map: "https://maps.google.com/?q=Sunset+Town+Phu+Quoc",
     timeline: [
@@ -360,6 +372,8 @@ const tripDays = [
     date: "04/03（五）",
     title: "Kingkong Mart 採買、飯店泳池與沙灘火舞",
     theme: "採買收尾日",
+    image:
+      "https://images.unsplash.com/photo-1491570529072-238d195471f2?auto=format&fit=crop&w=1200&q=80",
     summary: "把最後一天留給補貨、伴手禮與飯店內享受，節奏最輕鬆。",
     map: "https://maps.google.com/?q=Kingkong+Mart+Phu+Quoc",
     timeline: [
@@ -394,6 +408,8 @@ const tripDays = [
     date: "04/04（六）",
     title: "早餐後退房，回台中",
     theme: "回程日",
+    image:
+      "https://images.unsplash.com/photo-1491555103944-7c647fd857e6?auto=format&fit=crop&w=1200&q=80",
     summary: "因為航班偏早，這天只安排早餐、退房與前往機場，節奏乾淨俐落。",
     map: "https://maps.google.com/?q=Phu+Quoc+International+Airport",
     timeline: [
@@ -624,7 +640,9 @@ function App() {
 
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
               {tripDays.map((day) => (
-                <article key={day.day} className="rounded-[1.5rem] border border-sea-100 bg-white p-5">
+                <article key={day.day} className="overflow-hidden rounded-[1.5rem] border border-sea-100 bg-white">
+                  <img src={day.image} alt={day.title} className="h-36 w-full object-cover" />
+                  <div className="p-5">
                   <div className="flex items-center justify-between gap-3">
                     <span className="rounded-full bg-sea-100 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-sea-800">
                       {day.day}
@@ -637,6 +655,7 @@ function App() {
                   <h3 className="mt-2 text-xl font-semibold text-sea-900">{day.title}</h3>
                   <p className="mt-2 text-sm font-medium text-coral">{day.theme}</p>
                   <p className="mt-3 text-sm leading-7 text-slate-600">{day.summary}</p>
+                  </div>
                 </article>
               ))}
             </div>
@@ -654,6 +673,10 @@ function App() {
                   key={day.day}
                   className="overflow-hidden rounded-[2rem] border border-sea-100 bg-[linear-gradient(180deg,_rgba(238,251,251,0.9)_0%,_rgba(255,255,255,1)_100%)]"
                 >
+                  <div className="relative">
+                    <img src={day.image} alt={day.title} className="h-44 w-full object-cover md:h-52" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-sea-950/40 to-transparent" />
+                  </div>
                   <div className="flex flex-col gap-4 border-b border-sea-100 p-6 md:flex-row md:items-end md:justify-between">
                     <div>
                       <p className="text-sm font-semibold uppercase tracking-[0.25em] text-sea-700">
